@@ -112,6 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (playerX === mazeSize - 1 && playerY === mazeSize - 1) {
             logMessage.innerHTML = 'Mission log: Maze completed! You have trapped the ghostly malware! Now, read about how to defend your home.';
             defenseLink.classList.remove('hidden');
+            // New: Add pulse animation to the defense link
+            defenseLink.classList.add('pulse-animation');
             window.removeEventListener('keydown', movePlayer);
         }
     };
@@ -138,6 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
         commandElement.innerHTML = '';
         playerX = 0;
         playerY = 0;
+        // New: Remove pulse animation from all buttons
+        promptOkButton.classList.remove('pulse-animation');
+        visibleZapButton.classList.remove('pulse-animation');
+        defenseLink.classList.remove('pulse-animation');
         window.removeEventListener('keydown', movePlayer);
     };
 
@@ -146,6 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
         logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
         typeWriter(commandToType, 0, () => {
             blinkingCursor.style.animation = 'blink 1s step-end infinite';
+            // New: Add pulse animation to the prompt button
+            promptOkButton.classList.add('pulse-animation');
         });
     };
 
@@ -162,12 +170,17 @@ document.addEventListener('DOMContentLoaded', () => {
         initialPrompt.style.display = 'none';
         gameContainer.classList.remove('hidden');
         logMessage.innerHTML = 'Mission Log: The command has been entered. Awaiting results...';
+        // New: Remove pulse from prompt button and add to zap button
+        promptOkButton.classList.remove('pulse-animation');
+        visibleZapButton.classList.add('pulse-animation');
     });
 
     // The new listener for the visible button
     visibleZapButton.addEventListener('click', () => {
         // The visible button's click should now trigger the hidden button's action
         hiddenButton.click();
+        // New: Remove pulse animation
+        visibleZapButton.classList.remove('pulse-animation');
     });
 
     hiddenButton.addEventListener('click', () => {
@@ -195,9 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('keydown', movePlayer);
     };
 
-    // New: Handle mobile button touches
+    // Handle mobile button touches
     mobileControls.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // This is important to prevent unwanted scrolling and delays
+        e.preventDefault();
         const button = e.target.closest('button');
         if (button) {
             const direction = button.dataset.direction;
@@ -208,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'left': key = 'ArrowLeft'; break;
                 case 'right': key = 'ArrowRight'; break;
             }
-            // Create a mock event object to pass to the existing movePlayer function
             const mockEvent = { key: key };
             movePlayer(mockEvent);
         }
