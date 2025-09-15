@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghostbusters Maze</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <header>
+        <h1>Chase the Ghost!</h1>
+        <h2>Navigate the spooky maze to trap the ghost!</h2>
+    </header>
+
+    <div class="mission-log-box" id="maze-container">
+        <h3>Maze Protocol</h3>
+        <p>Use your arrow keys to move the Ghostbuster through the maze.</p>
+        <canvas id="maze-canvas" width="400" height="400"></canvas>
+        <div class="mobile-controls">
+            <button class="up">Up</button>
+            <button class="left">Left</button>
+            <button class="down">Down</button>
+            <button class="right">Right</button>
+        </div>
+        <a href="index.html" class="game-button">Go Back to Headquarters</a>
+    </div>
+
+    <script src="maze.js"></script>
+</body>
+</html>
