@@ -39,6 +39,11 @@ header h2 {
     max-width: 80%;
 }
 
+.prompt-box h3 {
+    color: #e74c3c;
+    text-shadow: 2px 2px 4px #000;
+}
+
 .command-box {
     background-color: #1a242f;
     border: 1px solid #293a4a;
@@ -222,8 +227,16 @@ header h2 {
         font-size: 2em;
     }
 
+    .prompt-box h3 {
+        font-size: 2.5em;
+    }
+
     .game-button {
         padding: 20px 40px;
+    }
+
+    .slimer-image {
+        max-width: 500px;
     }
 }
 
