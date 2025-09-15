@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Load the ghost image
     const ghostImage = new Image();
-    ghostImage.src = 'ghost_icon.png';
+    ghostImage.src = 'images/ghost_icon.png';
     const ghostImageSize = gridSize * 0.9;
 
     // Function to find a random open cell for the ghost
