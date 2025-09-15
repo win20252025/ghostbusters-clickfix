@@ -73,10 +73,21 @@ header h2 {
     padding: 20px;
 }
 
+/* Image styling for mobile-first approach */
 .slimer-image {
-    max-width: 10%; /* Adjusted to be half the size */
-    max-height: 20%;
+    max-width: 75%; /* Sized for mobile screens */
+    height: auto;
     margin-bottom: 20px;
+}
+
+.ghostbusters-image {
+    max-width: 80%; /* Sized for mobile screens */
+    height: auto;
+}
+
+.released-ghosts-image {
+    width: 100px;
+    margin-top: 10px;
 }
 
 .game-button {
@@ -155,11 +166,6 @@ header h2 {
     margin-top: 0;
 }
 
-.released-ghosts-image {
-    width: 100px;
-    margin-top: 10px;
-}
-
 #maze-container {
     padding: 20px;
 }
@@ -201,13 +207,6 @@ header h2 {
 .mobile-controls .left { grid-area: left; }
 .mobile-controls .right { grid-area: right; }
 
-/* Styles for the Ghostbusters image */
-.ghostbusters-image {
-    width: 75%;
-    max-width: 300px;
-    height: auto;
-}
-
 /* Show controls on screens smaller than 768px */
 @media (max-width: 767px) {
     .mobile-controls {
@@ -241,9 +240,10 @@ header h2 {
     .game-button {
         padding: 20px 40px;
     }
-
+    
+    /* Responsive image sizing for larger screens */
     .slimer-image {
-        max-width: 50%;
+        max-width: 50%; /* Make it half-size for laptops */
     }
     .ghostbusters-image {
         max-width: 400px;
@@ -260,5 +260,3 @@ header h2 {
 .pulse-animation {
     animation: pulse 1.5s infinite;
 }
-
-
