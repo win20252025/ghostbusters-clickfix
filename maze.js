@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkWin = () => {
         if (playerX === finishX && playerY === finishY) {
             alert("You found the ghost! Mission complete!");
-            window.location.href = "index.html";
+            window.location.href = "defense.html";
         }
     };
 
