@@ -62,56 +62,42 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let y = 0; y < mazeSize; y++) {
             maze[y] = [];
             for (let x = 0; x < mazeSize; x++) {
-                // Initialize maze with walls and a single path
-                if (x % 2 === 0 && y % 2 === 0) {
-                    maze[y][x] = 0; // Path
-                } else {
-                    maze[y][x] = 1; // Wall
-                }
+                // All cells are walls initially
+                maze[y][x] = 1;
             }
         }
-        
-        let path = [];
-        let visited = new Set();
-        let current = {x: 0, y: 0};
-        maze[current.y][current.x] = 0;
-        path.push(current);
 
-        while (path.length > 0) {
-            let directions = shuffle([
-                {dx: 0, dy: 1}, {dx: 0, dy: -1}, {dx: 1, dy: 0}, {dx: -1, dy: 0}
-            ]);
+        const stack = [];
+        let current = { x: 0, y: 0 };
+        maze[current.y][current.x] = 0; // Mark as path
+        stack.push(current);
+
+        while (stack.length > 0) {
+            current = stack.pop();
+            const neighbors = [];
             
-            let found = false;
-            for(const {dx, dy} of directions) {
-                const newX = current.x + dx * 2;
-                const newY = current.y + dy * 2;
-                
-                if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] === 1) {
-                    maze[current.y + dy][current.x + dx] = 0;
-                    maze[newY][newX] = 0;
-                    current = {x: newX, y: newY};
-                    path.push(current);
-                    found = true;
-                    break;
-                }
-            }
+            // Check potential unvisited neighbors (2 cells away)
+            if (current.x > 1 && maze[current.y][current.x - 2] === 1) neighbors.push({ x: current.x - 2, y: current.y });
+            if (current.x < mazeSize - 2 && maze[current.y][current.x + 2] === 1) neighbors.push({ x: current.x + 2, y: current.y });
+            if (current.y > 1 && maze[current.y - 2][current.x] === 1) neighbors.push({ x: current.x, y: current.y - 2 });
+            if (current.y < mazeSize - 2 && maze[current.y + 2][current.x] === 1) neighbors.push({ x: current.x, y: current.y + 2 });
 
-            if (!found) {
-                current = path.pop();
+            if (neighbors.length > 0) {
+                stack.push(current);
+                const next = neighbors[Math.floor(Math.random() * neighbors.length)];
+                
+                // Remove the wall between current and next cell
+                const wallX = current.x + (next.x - current.x) / 2;
+                const wallY = current.y + (next.y - current.y) / 2;
+                maze[wallY][wallX] = 0;
+                maze[next.y][next.x] = 0;
+                stack.push(next);
             }
         }
         
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        maze[0][0] = 2; // Player start
-        maze[mazeSize - 1][mazeSize - 1] = 3; // Ghost end
+        // Ensure start and end are clear paths
+        maze[0][0] = 0;
+        maze[mazeSize - 1][mazeSize - 1] = 0;
     };
     
     // Draw the maze
@@ -229,25 +215,24 @@ document.addEventListener('DOMContentLoaded', () => {
         generateMaze();
         drawMaze(); 
         window.addEventListener('keydown', movePlayer);
-    };
-
-    // Handle mobile button touches
-    mobileControls.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        const button = e.target.closest('button');
-        if (button) {
-            const direction = button.dataset.direction;
-            let key;
-            switch (direction) {
-                case 'up': key = 'ArrowUp'; break;
-                case 'down': key = 'ArrowDown'; break;
-                case 'left': key = 'ArrowLeft'; break;
-                case 'right': key = 'ArrowRight'; break;
+        // Mobile controls listener
+        mobileControls.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const button = e.target.closest('button');
+            if (button) {
+                const direction = button.dataset.direction;
+                let key;
+                switch (direction) {
+                    case 'up': key = 'ArrowUp'; break;
+                    case 'down': key = 'ArrowDown'; break;
+                    case 'left': key = 'ArrowLeft'; break;
+                    case 'right': key = 'ArrowRight'; break;
+                }
+                const mockEvent = { key: key };
+                movePlayer(mockEvent);
             }
-            const mockEvent = { key: key };
-            movePlayer(mockEvent);
-        }
-    });
+        });
+    };
 
     drawGhostIcon();
 });
