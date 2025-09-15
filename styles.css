@@ -203,13 +203,13 @@ header h2 {
     }
 }
 
-/* New: Styles for larger screens (laptops and desktops) */
+/* Styles for larger screens (laptops and desktops) */
 @media (min-width: 768px) {
     .game-container,
     .prompt-box,
     .mission-log-box,
     #maze-container {
-        max-width: 800px; /* Limits content width */
+        max-width: 900px;
         margin-left: auto;
         margin-right: auto;
     }
@@ -225,4 +225,15 @@ header h2 {
     .game-button {
         padding: 20px 40px;
     }
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse-animation {
+    animation: pulse 1.5s infinite;
 }
