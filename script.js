@@ -1,10 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Only run this script on pages with a game-container
+    const gameContainer = document.querySelector('.game-container');
+    if (!gameContainer) {
+        return;
+    }
+
     const hiddenButton = document.getElementById('hidden-malicious-button');
     const logMessage = document.getElementById('log-message');
     const popUp = document.getElementById('pop-up-message');
     const initialPrompt = document.getElementById('initial-prompt');
     const promptOkButton = document.getElementById('prompt-ok-button');
-    const gameContainer = document.querySelector('.game-container');
     const defenseLink = document.getElementById('defense-link');
     const mazeContainer = document.getElementById('maze-container');
     const commandToType = '--release_all_ghosts';
@@ -16,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const memoryGameContainer = document.createElement('div');
     memoryGameContainer.className = 'memory-game-container hidden';
     
-    const ghostImages = ['slimer', 'pke-meter', 'proton-pack', 'ghost-trap']; // Replace with your actual image file names without extension
+    const ghostImages = ['slimer', 'pke-meter', 'proton-pack', 'ghost-trap']; 
     let cards = [];
     let firstCard = null;
     let secondCard = null;
@@ -47,14 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const cardFront = document.createElement('div');
             cardFront.className = 'card-front';
             const frontImg = document.createElement('img');
-            frontImg.src = `${imageName}_small.png`; // Use small versions of your images if available
+            frontImg.src = `${imageName}_small.png`;
             frontImg.alt = imageName;
             cardFront.appendChild(frontImg);
 
             const cardBack = document.createElement('div');
             cardBack.className = 'card-back';
             const backImg = document.createElement('img');
-            backImg.src = 'ghostbusters_logo_small.png'; // A card back image
+            backImg.src = 'ghostbusters_logo_small.png';
             backImg.alt = 'Ghostbusters Logo';
             cardBack.appendChild(backImg);
 
@@ -130,66 +135,84 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const initializeGame = () => {
-        initialPrompt.style.display = 'flex';
-        gameContainer.classList.add('hidden');
-        popUp.classList.add('hidden');
-        defenseLink.classList.add('hidden');
-        mazeContainer.classList.add('hidden');
-        logMessage.innerText = 'Awaiting next action...';
-        commandElement.innerHTML = '';
+        // Check if elements exist before trying to access them
+        if (initialPrompt) initialPrompt.style.display = 'flex';
+        if (gameContainer) gameContainer.classList.add('hidden');
+        if (popUp) popUp.classList.add('hidden');
+        if (defenseLink) defenseLink.classList.add('hidden');
+        if (mazeContainer) mazeContainer.classList.add('hidden');
+        if (logMessage) logMessage.innerText = 'Awaiting next action...';
+        if (commandElement) commandElement.innerHTML = '';
+        
         firstCard = null;
         secondCard = null;
         lockBoard = false;
         matchesFound = 0;
-        promptOkButton.classList.remove('pulse-animation');
-        visibleZapButton.classList.remove('pulse-animation');
-        defenseLink.classList.remove('pulse-animation');
+        
+        if (promptOkButton) promptOkButton.classList.remove('pulse-animation');
+        if (visibleZapButton) visibleZapButton.classList.remove('pulse-animation');
+        if (defenseLink) defenseLink.classList.remove('pulse-animation');
 
-        logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
-        typeWriter(commandToType, 0, () => {
-            blinkingCursor.style.animation = 'blink 1s step-end infinite';
-            promptOkButton.classList.add('pulse-animation');
-        });
+        if (logMessage) logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
+        if (commandElement && blinkingCursor && promptOkButton) {
+            typeWriter(commandToType, 0, () => {
+                blinkingCursor.style.animation = 'blink 1s step-end infinite';
+                promptOkButton.classList.add('pulse-animation');
+            });
+        }
     };
 
     setTimeout(initializeGame, 100);
 
-    promptOkButton.addEventListener('click', () => {
-        initialPrompt.style.display = 'none';
-        gameContainer.classList.remove('hidden');
-        logMessage.innerHTML = 'Mission Log: The command has been entered. Awaiting results...';
-        promptOkButton.classList.remove('pulse-animation');
-        visibleZapButton.classList.add('pulse-animation');
-    });
+    if (promptOkButton) {
+        promptOkButton.addEventListener('click', () => {
+            if (initialPrompt) initialPrompt.style.display = 'none';
+            if (gameContainer) gameContainer.classList.remove('hidden');
+            if (logMessage) logMessage.innerHTML = 'Mission Log: The command has been entered. Awaiting results...';
+            if (promptOkButton) promptOkButton.classList.remove('pulse-animation');
+            if (visibleZapButton) visibleZapButton.classList.add('pulse-animation');
+        });
+    }
 
-    visibleZapButton.addEventListener('click', () => {
-        hiddenButton.click();
-        visibleZapButton.classList.remove('pulse-animation');
-    });
+    if (visibleZapButton) {
+        visibleZapButton.addEventListener('click', () => {
+            if (hiddenButton) hiddenButton.click();
+            if (visibleZapButton) visibleZapButton.classList.remove('pulse-animation');
+        });
+    }
 
-    hiddenButton.addEventListener('click', () => {
-        popUp.classList.remove('hidden');
-        logMessage.innerHTML = 'Mission Log: Ghosts have been released! Initializing log investigation...';
-        setTimeout(() => {
-            popUp.classList.add('hidden');
-            investigateLogs();
-        }, 3000);
-    });
+    if (hiddenButton) {
+        hiddenButton.addEventListener('click', () => {
+            if (popUp) popUp.classList.remove('hidden');
+            if (logMessage) logMessage.innerHTML = 'Mission Log: Ghosts have been released! Initializing log investigation...';
+            setTimeout(() => {
+                if (popUp) popUp.classList.add('hidden');
+                investigateLogs();
+            }, 3000);
+        });
+    }
     
     const investigateLogs = () => {
-        logMessage.innerHTML = `
-            <p style="color: yellow; font-weight: bold;">Mission Update 1: You tried to zap the Slimer!</p>
-            <p style="color: red; font-weight: bold;">Mission Update 2: Whoa! The system ran "Release the captured ghosts" instead!</p>
-            <br>
-            <p style="color: red; font-weight: bold;">A sneaky ghost trick was used!</p>
-            <p>You have to trap the ghosts! Match the ghosts to win and **click-fix** the problem!</p>
-        `;
+        if (logMessage) {
+            logMessage.innerHTML = `
+                <p style="color: yellow; font-weight: bold;">Mission Update 1: You tried to zap the Slimer!</p>
+                <p style="color: red; font-weight: bold;">Mission Update 2: Whoa! The system ran "Release the captured ghosts" instead!</p>
+                <br>
+                <p style="color: red; font-weight: bold;">A sneaky ghost trick was used!</p>
+                <p>You have to trap the ghosts! Match the ghosts to win and **click-fix** the problem!</p>
+            `;
+        }
 
-        gameContainer.classList.add('hidden');
-        mazeContainer.classList.add('hidden');
-        memoryGameContainer.classList.remove('hidden');
-        document.querySelector('.game-container').appendChild(memoryGameContainer);
+        if (gameContainer) gameContainer.classList.add('hidden');
+        if (mazeContainer) mazeContainer.classList.add('hidden');
+        if (memoryGameContainer) memoryGameContainer.classList.remove('hidden');
+        if (gameContainer) gameContainer.appendChild(memoryGameContainer);
 
         createCards();
     };
+
+    // If gameContainer exists, proceed with game logic
+    if (gameContainer) {
+        setTimeout(initializeGame, 100);
+    }
 });
