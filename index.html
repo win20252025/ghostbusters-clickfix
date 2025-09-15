@@ -6,6 +6,39 @@
     <title>Ghostbusters ClickFix Training</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <style>
+        .mobile-controls {
+            display: none; /* Hidden by default for desktop */
+            grid-template-areas: ". up ." "left down right";
+            justify-items: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            width: 200px;
+        }
+
+        .mobile-controls button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            border: 2px solid #2980b9;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .mobile-controls .up { grid-area: up; }
+        .mobile-controls .down { grid-area: down; }
+        .mobile-controls .left { grid-area: left; }
+        .mobile-controls .right { grid-area: right; }
+
+        @media (max-width: 600px) {
+            .mobile-controls {
+                display: grid; /* Displayed on small screens */
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -42,6 +75,12 @@
     <div id="maze-container" class="hidden">
         <h3>Find the way to the ghost trap! 👻</h3>
         <canvas id="maze-canvas" width="400" height="400"></canvas>
+        <div class="mobile-controls">
+            <button class="up" data-direction="up">▲</button>
+            <button class="left" data-direction="left">◀</button>
+            <button class="down" data-direction="down">▼</button>
+            <button class="right" data-direction="right">▶</button>
+        </div>
     </div>
 
     <div id="pop-up-message" class="hidden">
