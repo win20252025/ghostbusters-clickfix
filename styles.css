@@ -1,112 +1,20 @@
 body {
-    font-family: 'Bangers', cursive;
     background-color: #2c3e50;
     color: #ecf0f1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
+    font-family: 'Bangers', cursive;
     text-align: center;
+    padding: 20px;
 }
 
 header h1 {
-    color: #3498db;
-    font-size: 3rem;
-    margin-bottom: 0;
+    color: #e74c3c;
+    font-size: 3em;
+    text-shadow: 2px 2px 4px #000;
 }
 
 header h2 {
     color: #f1c40f;
-    font-size: 1.5rem;
-    margin-top: 0;
-}
-
-.slimer-image {
-    width: 200px;
-    margin-bottom: 20px;
-}
-
-.game-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.game-button {
-    font-size: 1.5rem;
-    padding: 15px 30px;
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    font-family: inherit;
-    transition: transform 0.2s;
-    margin-top: 20px;
-}
-
-#visible-zap-button {
-    background-color: #3498db;
-    color: white;
-    box-shadow: 0 5px #2980b9;
-    z-index: 5;
-    animation: pulse-glow 2s infinite;
-}
-
-#visible-zap-button:active {
-    box-shadow: 0 2px #2980b9;
-    transform: translateY(3px);
-}
-
-#hidden-malicious-button {
-    background-color: red;
-    color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 80%);
-    opacity: 0;
-    z-index: 10;
-}
-
-.mission-log-box {
-    background-color: #34495e;
-    border: 3px solid #f1c40f;
-    padding: 20px;
-    margin-top: 30px;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 10px;
-}
-
-.mission-log-box h3 {
-    color: #f1c40f;
-}
-
-#log-message {
-    font-family: monospace;
-    color: #2ecc71;
-    font-size: 1.2rem;
-}
-
-#pop-up-message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #c0392b;
-    color: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    z-index: 100;
-}
-
-.hidden {
-    display: none;
+    font-size: 1.5em;
 }
 
 .prompt-overlay {
@@ -117,137 +25,180 @@ header h2 {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 200;
+    align-items: center;
+    z-index: 1000;
 }
 
 .prompt-box {
     background-color: #34495e;
-    border: 3px solid #e74c3c;
-    border-radius: 15px;
     padding: 40px;
-    text-align: center;
-    width: 80%;
-    max-width: 500px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-}
-
-.prompt-box h3 {
-    color: #f1c40f;
-    font-size: 2rem;
-}
-
-.prompt-box p {
-    font-size: 1.2rem;
-    margin: 20px 0;
-}
-
-.main-logo-image {
-    width: 50%;
-    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 3px solid #f1c40f;
+    max-width: 80%;
 }
 
 .command-box {
-    background-color: #0d121c;
-    border: 2px solid #3498db;
-    padding: 15px;
-    border-radius: 8px;
+    background-color: #1a242f;
+    border: 1px solid #293a4a;
+    padding: 10px;
     margin: 20px 0;
-    font-family: monospace;
+    border-radius: 5px;
+}
+
+#command-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2em;
     color: #2ecc71;
-    overflow: hidden;
     white-space: nowrap;
+    overflow: hidden;
 }
 
-#prompt-ok-button {
-    animation: pulse-glow 2s infinite;
-    box-shadow: 0 5px #2980b9;
-}
-
-#blinking-cursor {
+.blinking-cursor {
     animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
-    from, to {
-        color: transparent;
-    }
-    50% {
-        color: #2ecc71;
-    }
+    from, to { color: transparent; }
+    50% { color: #2ecc71; }
 }
 
-@keyframes pulse-glow {
-    0% {
-        box-shadow: 0 0 5px #3498db, 0 0 10px #3498db;
-    }
-    50% {
-        box-shadow: 0 0 20px #3498db, 0 0 40px #3498db;
-    }
-    100% {
-        box-shadow: 0 0 5px #3498db, 0 0 10px #3498db;
-    }
+.game-container {
+    padding: 20px;
 }
 
-/* Fix for the Restart Training link */
-.game-button:visited {
-    color: white;
-}
-
-/* Style for the defense link */
-.defense-link-style {
-    background-color: #f1c40f;
-    color: #2c3e50 !important;
-    box-shadow: 0 5px #f39c12;
-}
-.defense-link-style:active {
-    box-shadow: 0 2px #f39c12;
-    transform: translateY(3px);
-}
-/* This is the new rule to fix the purple color, with increased specificity */
-a#defense-link.defense-link-style:visited {
-    color: #2c3e50 !important;
-}
-
-/* Style for the new defense.html page */
-.content-box {
-    background-color: #34495e;
-    border: 3px solid #f1c40f;
-    border-radius: 15px;
-    padding: 40px;
-    margin: 20px;
-    max-width: 600px;
-    text-align: left;
-}
-
-.content-box h3 {
-    text-align: center;
-    color: #3498db;
-}
-
-.content-box ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.content-box li {
-    font-size: 1.5rem;
+.slimer-image {
+    max-width: 100%;
+    height: auto;
     margin-bottom: 20px;
 }
 
-/* Maze styles */
-#maze-container {
-    margin-top: 20px;
+.game-button {
+    padding: 15px 30px;
+    font-family: 'Bangers', cursive;
+    font-size: 1.5em;
+    color: #fff;
+    background-color: #c0392b;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #922b21;
+    transition: all 0.2s ease-in-out;
+}
+
+.game-button:hover {
+    background-color: #e74c3c;
+    box-shadow: 0 3px 0 #922b21;
+    transform: translateY(2px);
+}
+
+.game-button:active {
+    background-color: #e74c3c;
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+.hidden {
+    display: none;
+}
+
+.mission-log-box {
     background-color: #34495e;
-    border: 3px solid #f1c40f;
-    border-radius: 10px;
+    border: 2px solid #2980b9;
     padding: 20px;
-    text-align: center;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    max-width: 800px;
+}
+
+.mission-log-box h3 {
+    color: #3498db;
+    text-shadow: 1px 1px 2px #000;
+}
+
+#log-message p {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+}
+
+#hidden-malicious-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: 10;
+}
+
+#pop-up-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    z-index: 2000;
+    border: 3px solid #c0392b;
+}
+
+#pop-up-message h3 {
+    margin-top: 0;
+}
+
+.released-ghosts-image {
+    width: 100px;
+    margin-top: 10px;
+}
+
+#maze-container {
+    padding: 20px;
 }
 
 #maze-canvas {
-    background-color: #ecf0f1;
-    border: 2px solid #2c3e50;
-    margin-top: 10px;
+    background-color: #fff;
+    border: 5px solid #bdc3c7;
+}
+
+.mobile-controls {
+    display: none; /* Hidden by default */
+    grid-template-areas: ". up ." "left down right";
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px auto;
+    width: 200px;
+}
+
+.mobile-controls button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: white;
+    border: 2px solid #2980b9;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: 'Bangers', cursive;
+}
+
+.mobile-controls button:active {
+    background-color: #2980b9;
+    transform: translateY(2px);
+}
+
+.mobile-controls .up { grid-area: up; }
+.mobile-controls .down { grid-area: down; }
+.mobile-controls .left { grid-area: left; }
+.mobile-controls .right { grid-area: right; }
+
+/* Show controls on screens smaller than 600px */
+@media (max-width: 600px) {
+    .mobile-controls {
+        display: grid;
+    }
 }
