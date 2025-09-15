@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const memoryGameContainer = document.createElement('div');
     memoryGameContainer.className = 'memory-game-container hidden';
     
-    // Updated: Added 'ghost_icon' to the list of images
+    // Updated: Corrected image names to match the files you have
     const ghostImages = ['slimer', 'pke-meter', 'proton-pack', 'ghost-trap', 'ghost_icon']; 
     let cards = [];
     let firstCard = null;
@@ -51,14 +51,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const cardFront = document.createElement('div');
             cardFront.className = 'card-front';
             const frontImg = document.createElement('img');
-            frontImg.src = `images/${imageName}.png`;
+            // Updated: Image name now uses the name from the array directly without '_small'
+            frontImg.src = `images/${imageName}.png`; 
             frontImg.alt = imageName;
             cardFront.appendChild(frontImg);
 
             const cardBack = document.createElement('div');
             cardBack.className = 'card-back';
             const backImg = document.createElement('img');
-            backImg.src = 'images/card_back.png';
+            // Updated: Card back image name
+            backImg.src = 'images/card_back.png'; 
             backImg.alt = 'Card Back';
             cardBack.appendChild(backImg);
 
@@ -209,8 +211,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (memoryGameButton) {
         memoryGameButton.addEventListener('click', () => {
             if (gameChoiceContainer) gameChoiceContainer.classList.add('hidden');
-            if (memoryGameContainer) memoryGameContainer.classList.remove('hidden');
-            if (gameContainer) gameContainer.appendChild(memoryGameContainer);
+            if (memoryGameContainer) {
+                // Remove existing memory game container if it exists
+                const existingMemoryGame = document.querySelector('.memory-game-container');
+                if (existingMemoryGame) {
+                    existingMemoryGame.remove();
+                }
+                
+                // Append a new, fresh memory game container
+                gameContainer.appendChild(memoryGameContainer);
+                memoryGameContainer.classList.remove('hidden');
+            }
             if (logMessage) logMessage.innerHTML = 'Mission Log: Ghost-matching protocol activated...';
             createCards();
         });
