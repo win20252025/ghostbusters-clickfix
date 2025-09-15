@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 maze[y][x] = 1; // Start with all walls
             }
         }
-
+        
         let path = [];
         let visited = new Set();
 
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-
+        
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         maze[0][0] = 2; // Player start
         maze[mazeSize - 1][mazeSize - 1] = 3; // Ghost end
     };
-
+    
     // Draw the maze
     const drawMaze = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.beginPath();
         ctx.arc(playerX * cellSize + cellSize / 2, playerY * cellSize + cellSize / 2, cellSize / 2 - 5, 0, 2 * Math.PI);
         ctx.fill();
-
+        
         ctx.drawImage(ghostCanvas, (mazeSize - 1) * cellSize, (mazeSize - 1) * cellSize, cellSize, cellSize);
     };
 
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const movePlayer = (e) => {
         let newX = playerX;
         let newY = playerY;
-
+        
         if (e.key === 'ArrowUp') newY = playerY - 1;
         if (e.key === 'ArrowDown') newY = playerY + 1;
         if (e.key === 'ArrowLeft') newX = playerX - 1;
@@ -143,5 +143,60 @@ document.addEventListener('DOMContentLoaded', () => {
             window.removeEventListener('keydown', movePlayer);
         }
     };
+    
+    // Function to type the command
+    const typeWriter = (text, i, fnCallback) => {
+        if (i < text.length) {
+            commandElement.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(() => typeWriter(text, i, fnCallback), 100);
+        } else if (typeof fnCallback == 'function') {
+            fnCallback();
+        }
+    };
 
-    // Function to
+    const initializeGame = () => {
+        // This function combines the reset logic and start intro logic
+        initialPrompt.style.display = 'flex';
+        gameContainer.classList.add('hidden');
+        popUp.classList.add('hidden');
+        defenseLink.classList.add('hidden');
+        mazeContainer.classList.add('hidden');
+        logMessage.innerText = 'Awaiting next action...';
+        commandElement.innerHTML = '';
+        playerX = 0;
+        playerY = 0;
+        promptOkButton.classList.remove('pulse-animation');
+        visibleZapButton.classList.remove('pulse-animation');
+        defenseLink.classList.remove('pulse-animation');
+        window.removeEventListener('keydown', movePlayer);
+
+        logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
+        typeWriter(commandToType, 0, () => {
+            blinkingCursor.style.animation = 'blink 1s step-end infinite';
+            promptOkButton.classList.add('pulse-animation');
+        });
+    }
+
+    // Always initialize the game when the page loads
+    initializeGame();
+
+    promptOkButton.addEventListener('click', () => {
+        initialPrompt.style.display = 'none';
+        gameContainer.classList.remove('hidden');
+        logMessage.innerHTML = 'Mission Log: The command has been entered. Awaiting results...';
+        promptOkButton.classList.remove('pulse-animation');
+        visibleZapButton.classList.add('pulse-animation');
+    });
+
+    visibleZapButton.addEventListener('click', () => {
+        hiddenButton.click();
+        visibleZapButton.classList.remove('pulse-animation');
+    });
+
+    hiddenButton.addEventListener('click', () => {
+        popUp.classList.remove('hidden');
+        logMessage.innerHTML = 'Mission Log: Ghosts have been released! Initializing log investigation...';
+        setTimeout(() => {
+            popUp.classList.add('hidden');
+            invest
