@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const blinkingCursor = document.getElementById('blinking-cursor');
     const visibleZapButton = document.getElementById('visible-zap-button');
     
+    // Typewriter effect function
     const typeWriter = (text, i, fnCallback) => {
         if (i < text.length) {
             commandElement.innerHTML += text.charAt(i);
@@ -21,16 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Initialize the game state when the page loads
     const initializeGame = () => {
-        initialPrompt.style.display = 'flex';
-        gameContainer.classList.add('hidden');
-        popUp.classList.add('hidden');
-        gameChoiceContainer.classList.add('hidden');
-        logMessage.innerText = 'Awaiting next action...';
-        commandElement.innerHTML = '';
-        promptOkButton.classList.remove('pulse-animation');
-        visibleZapButton.classList.remove('pulse-animation');
-
         logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
         typeWriter(commandToType, 0, () => {
             blinkingCursor.style.animation = 'blink 1s step-end infinite';
@@ -38,8 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    setTimeout(initializeGame, 100);
-
+    // Event listeners
     promptOkButton.addEventListener('click', () => {
         initialPrompt.style.display = 'none';
         gameContainer.classList.remove('hidden');
@@ -62,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     });
     
+    // Function to show game choices after the attack
     const investigateLogs = () => {
         logMessage.innerHTML = `
             <p style="color: yellow; font-weight: bold;">Mission Update 1: You tried to zap the Slimer!</p>
@@ -73,4 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameContainer.classList.add('hidden');
         gameChoiceContainer.classList.remove('hidden');
     };
+
+    // Start the game initialization
+    initializeGame();
 });
