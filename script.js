@@ -62,29 +62,43 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let y = 0; y < mazeSize; y++) {
             maze[y] = [];
             for (let x = 0; x < mazeSize; x++) {
-                maze[y][x] = 1; // Start with all walls
+                // Initialize maze with walls and a single path
+                if (x % 2 === 0 && y % 2 === 0) {
+                    maze[y][x] = 0; // Path
+                } else {
+                    maze[y][x] = 1; // Wall
+                }
             }
         }
         
         let path = [];
         let visited = new Set();
+        let current = {x: 0, y: 0};
+        maze[current.y][current.x] = 0;
+        path.push(current);
 
-        function carvePath(x, y) {
-            visited.add(`${x},${y}`);
-            maze[y][x] = 0; // Carve a path
-            path.push({x, y});
-
-            const directions = shuffle([
-                {dx: 0, dy: -1}, {dx: 0, dy: 1}, {dx: -1, dy: 0}, {dx: 1, dy: 0}
+        while (path.length > 0) {
+            let directions = shuffle([
+                {dx: 0, dy: 1}, {dx: 0, dy: -1}, {dx: 1, dy: 0}, {dx: -1, dy: 0}
             ]);
-
-            for (const {dx, dy} of directions) {
-                const newX = x + dx;
-                const newY = y + dy;
-
-                if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && !visited.has(`${newX},${newY}`)) {
-                    carvePath(newX, newY);
+            
+            let found = false;
+            for(const {dx, dy} of directions) {
+                const newX = current.x + dx * 2;
+                const newY = current.y + dy * 2;
+                
+                if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] === 1) {
+                    maze[current.y + dy][current.x + dx] = 0;
+                    maze[newY][newX] = 0;
+                    current = {x: newX, y: newY};
+                    path.push(current);
+                    found = true;
+                    break;
                 }
+            }
+
+            if (!found) {
+                current = path.pop();
             }
         }
         
@@ -96,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return array;
         }
 
-        carvePath(0, 0);
         maze[0][0] = 2; // Player start
         maze[mazeSize - 1][mazeSize - 1] = 3; // Ghost end
     };
