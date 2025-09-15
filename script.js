@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameChoiceContainer = document.getElementById('game-choice-container');
     const memoryGameButton = document.getElementById('memory-game-button');
     const mazeGameButton = document.getElementById('maze-game-button');
-    
     const commandToType = '--release_all_ghosts';
     const commandElement = document.getElementById('ghostly-command');
     const blinkingCursor = document.getElementById('blinking-cursor');
@@ -197,4 +196,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p style="color: yellow; font-weight: bold;">Mission Update 1: You tried to zap the Slimer!</p>
                 <p style="color: red; font-weight: bold;">Mission Update 2: Whoa! The system ran "Release the captured ghosts" instead!</p>
                 <br>
-                <p style="color: red; font-weight: bold;">A sneaky ghost trick was used!</
+                <p style="color: red; font-weight: bold;">A sneaky ghost trick was used!</p>
+                <p>You have to trap the ghosts! Choose your next mission!</p>
+            `;
+        }
+
+        if (gameContainer) gameContainer.classList.add('hidden');
+        if (gameChoiceContainer) gameChoiceContainer.classList.remove('hidden');
+    };
+
+    if (memoryGameButton) {
+        memoryGameButton.addEventListener('click', () => {
+            if (gameChoiceContainer) gameChoiceContainer.classList.add('hidden');
+            if (memoryGameContainer) memoryGameContainer.classList.remove('hidden');
+            if (gameContainer) gameContainer.appendChild(memoryGameContainer);
+            if (logMessage) logMessage.innerHTML = 'Mission Log: Ghost-matching protocol activated...';
+            createCards();
+        });
+    }
+
+    if (mazeGameButton) {
+        mazeGameButton.addEventListener('click', () => {
+            if (gameChoiceContainer) gameChoiceContainer.classList.add('hidden');
+            if (mazeContainer) mazeContainer.classList.remove('hidden');
+            if (logMessage) logMessage.innerHTML = 'Mission Log: Maze protocol activated...';
+        });
+    }
+});
