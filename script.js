@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ghostCanvas.width = cellSize;
     ghostCanvas.height = cellSize;
     const gctx = ghostCanvas.getContext('2d');
-    
+
     // Draw the ghost icon
     const drawGhostIcon = () => {
         gctx.clearRect(0, 0, cellSize, cellSize);
@@ -56,23 +56,51 @@ document.addEventListener('DOMContentLoaded', () => {
         gctx.stroke();
     };
 
-    // Maze generation (simplified for example)
+    // Corrected maze generation
     const generateMaze = () => {
         maze = [];
         for (let y = 0; y < mazeSize; y++) {
             maze[y] = [];
             for (let x = 0; x < mazeSize; x++) {
-                maze[y][x] = (Math.random() < 0.2) ? 1 : 0;
+                maze[y][x] = 1; // Start with all walls
             }
         }
-        maze[0][0] = 2;
-        maze[mazeSize - 1][mazeSize - 1] = 3;
-        maze[0][1] = 0;
-        maze[1][0] = 0;
-        maze[mazeSize - 1][mazeSize - 2] = 0;
-        maze[mazeSize - 2][mazeSize - 1] = 0;
-    };
+        
+        let path = [];
+        let visited = new Set();
 
+        function carvePath(x, y) {
+            visited.add(`${x},${y}`);
+            maze[y][x] = 0; // Carve a path
+            path.push({x, y});
+
+            const directions = shuffle([
+                {dx: 0, dy: -1}, {dx: 0, dy: 1}, {dx: -1, dy: 0}, {dx: 1, dy: 0}
+            ]);
+
+            for (const {dx, dy} of directions) {
+                const newX = x + dx;
+                const newY = y + dy;
+
+                if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && !visited.has(`${newX},${newY}`)) {
+                    carvePath(newX, newY);
+                }
+            }
+        }
+        
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        carvePath(0, 0);
+        maze[0][0] = 2; // Player start
+        maze[mazeSize - 1][mazeSize - 1] = 3; // Ghost end
+    };
+    
     // Draw the maze
     const drawMaze = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -89,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.arc(playerX * cellSize + cellSize / 2, playerY * cellSize + cellSize / 2, cellSize / 2 - 5, 0, 2 * Math.PI);
         ctx.fill();
         
-        // Draw the ghost icon from the pre-rendered canvas
         ctx.drawImage(ghostCanvas, (mazeSize - 1) * cellSize, (mazeSize - 1) * cellSize, cellSize, cellSize);
     };
 
@@ -112,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (playerX === mazeSize - 1 && playerY === mazeSize - 1) {
             logMessage.innerHTML = 'Mission log: Maze completed! You have trapped the ghostly malware! Now, read about how to defend your home.';
             defenseLink.classList.remove('hidden');
-            // New: Add pulse animation to the defense link
             defenseLink.classList.add('pulse-animation');
             window.removeEventListener('keydown', movePlayer);
         }
@@ -140,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
         commandElement.innerHTML = '';
         playerX = 0;
         playerY = 0;
-        // New: Remove pulse animation from all buttons
         promptOkButton.classList.remove('pulse-animation');
         visibleZapButton.classList.remove('pulse-animation');
         defenseLink.classList.remove('pulse-animation');
@@ -152,79 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
         logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
         typeWriter(commandToType, 0, () => {
             blinkingCursor.style.animation = 'blink 1s step-end infinite';
-            // New: Add pulse animation to the prompt button
             promptOkButton.classList.add('pulse-animation');
         });
     };
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const isReset = urlParams.get('reset');
-    
-    if (isReset) {
-        startIntro();
-    } else {
-        startIntro();
-    }
-    
-    promptOkButton.addEventListener('click', () => {
-        initialPrompt.style.display = 'none';
-        gameContainer.classList.remove('hidden');
-        logMessage.innerHTML = 'Mission Log: The command has been entered. Awaiting results...';
-        // New: Remove pulse from prompt button and add to zap button
-        promptOkButton.classList.remove('pulse-animation');
-        visibleZapButton.classList.add('pulse-animation');
-    });
-
-    // The new listener for the visible button
-    visibleZapButton.addEventListener('click', () => {
-        // The visible button's click should now trigger the hidden button's action
-        hiddenButton.click();
-        // New: Remove pulse animation
-        visibleZapButton.classList.remove('pulse-animation');
-    });
-
-    hiddenButton.addEventListener('click', () => {
-        popUp.classList.remove('hidden');
-        logMessage.innerHTML = 'Mission Log: Ghosts have been released! Initializing log investigation...';
-        setTimeout(() => {
-            popUp.classList.add('hidden');
-            investigateLogs();
-        }, 3000);
-    });
-    
-    const investigateLogs = () => {
-        logMessage.innerHTML = `
-            <p style="color: yellow; font-weight: bold;">Mission Update 1: You tried to zap the Slimer!</p>
-            <p style="color: red; font-weight: bold;">Mission Update 2: Whoa! The system ran "Release the captured ghosts" instead!</p>
-            <br>
-            <p style="color: red; font-weight: bold;">A sneaky ghost trick was used!</p>
-            <p>A sneaky ghost hijacked your click! It's hiding in the maze. Chase it down to trap it and fix the problem!</p>
-        `;
-
-        gameContainer.classList.add('hidden');
-        mazeContainer.classList.remove('hidden');
-        generateMaze();
-        drawMaze(); 
-        window.addEventListener('keydown', movePlayer);
-    };
-
-    // Handle mobile button touches
-    mobileControls.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        const button = e.target.closest('button');
-        if (button) {
-            const direction = button.dataset.direction;
-            let key;
-            switch (direction) {
-                case 'up': key = 'ArrowUp'; break;
-                case 'down': key = 'ArrowDown'; break;
-                case 'left': key = 'ArrowLeft'; break;
-                case 'right': key = 'ArrowRight'; break;
-            }
-            const mockEvent = { key: key };
-            movePlayer(mockEvent);
-        }
-    });
-
-    drawGhostIcon();
-});
