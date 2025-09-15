@@ -177,8 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Always initialize the game when the page loads
-    initializeGame();
+    // Wrap the initialization in a small delay to prevent a race condition
+    setTimeout(initializeGame, 100);
 
     promptOkButton.addEventListener('click', () => {
         initialPrompt.style.display = 'none';
