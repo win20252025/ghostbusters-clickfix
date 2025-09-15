@@ -11,134 +11,114 @@ document.addEventListener('DOMContentLoaded', () => {
     const commandElement = document.getElementById('ghostly-command');
     const blinkingCursor = document.getElementById('blinking-cursor');
     const visibleZapButton = document.getElementById('visible-zap-button');
-    const mobileControls = document.querySelector('.mobile-controls');
-
-    // Maze Game Variables
-    const canvas = document.getElementById('maze-canvas');
-    const ctx = canvas.getContext('2d');
-    const mazeSize = 21; // Must be odd for the algorithm to work correctly
-    const cellSize = canvas.width / mazeSize;
-    let playerX = 1;
-    let playerY = 1;
-    let maze = [];
-
-    // Create a ghost icon directly on a hidden canvas
-    const ghostCanvas = document.createElement('canvas');
-    ghostCanvas.width = cellSize;
-    ghostCanvas.height = cellSize;
-    const gctx = ghostCanvas.getContext('2d');
-
-    // Draw the ghost icon
-    const drawGhostIcon = () => {
-        gctx.clearRect(0, 0, cellSize, cellSize);
-        gctx.fillStyle = '#2ecc71';
-        gctx.beginPath();
-        gctx.arc(cellSize / 2, cellSize * 0.4, cellSize * 0.3, 0, 2 * Math.PI);
-        gctx.arc(cellSize * 0.3, cellSize * 0.7, cellSize * 0.1, 0, 2 * Math.PI);
-        gctx.arc(cellSize * 0.7, cellSize * 0.7, cellSize * 0.1, 0, 2 * Math.PI);
-        gctx.arc(cellSize * 0.5, cellSize * 0.7, cellSize * 0.1, 0, 2 * Math.PI);
-        gctx.fill();
-        gctx.strokeStyle = '#000';
-        gctx.stroke();
-        gctx.fillStyle = '#fff';
-        gctx.beginPath();
-        gctx.arc(cellSize * 0.4, cellSize * 0.35, cellSize * 0.05, 0, 2 * Math.PI);
-        gctx.arc(cellSize * 0.6, cellSize * 0.35, cellSize * 0.05, 0, 2 * Math.PI);
-        gctx.fill();
-        gctx.beginPath();
-        gctx.strokeStyle = '#c0392b';
-        gctx.lineWidth = 2;
-        gctx.arc(cellSize * 0.5, cellSize * 0.5, cellSize * 0.1, 0, Math.PI);
-        gctx.stroke();
-    };
-
-    const generateMaze = () => {
-        maze = [];
-        for (let y = 0; y < mazeSize; y++) {
-            maze[y] = [];
-            for (let x = 0; x < mazeSize; x++) {
-                maze[y][x] = 1; // All cells are walls initially
-            }
-        }
-
-        const stack = [];
-        let current = { x: 1, y: 1 }; // Start from an odd-numbered cell
-        maze[current.y][current.x] = 0; // Mark as path
-        stack.push(current);
-
-        while (stack.length > 0) {
-            current = stack.pop();
-            const neighbors = [];
-
-            // Check potential unvisited neighbors (2 cells away)
-            const possibleNeighbors = [
-                { x: current.x, y: current.y - 2 },
-                { x: current.x, y: current.y + 2 },
-                { x: current.x - 2, y: current.y },
-                { x: current.x + 2, y: current.y }
-            ];
-
-            for (const neighbor of possibleNeighbors) {
-                if (neighbor.x >= 1 && neighbor.x < mazeSize - 1 && neighbor.y >= 1 && neighbor.y < mazeSize - 1 && maze[neighbor.y][neighbor.x] === 1) {
-                    neighbors.push(neighbor);
-                }
-            }
-
-            if (neighbors.length > 0) {
-                stack.push(current);
-                const next = neighbors[Math.floor(Math.random() * neighbors.length)];
-
-                // Remove the wall between current and next cell
-                const wallX = current.x + (next.x - current.x) / 2;
-                const wallY = current.y + (next.y - current.y) / 2;
-                maze[wallY][wallX] = 0;
-                maze[next.y][next.x] = 0;
-                stack.push(next);
-            }
-        }
-    };
     
-    const drawMaze = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let y = 0; y < mazeSize; y++) {
-            for (let x = 0; x < mazeSize; x++) {
-                if (maze[y][x] === 1) {
-                    ctx.fillStyle = '#2c3e50';
-                    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                }
-            }
-        }
-        ctx.fillStyle = '#e74c3c';
-        ctx.beginPath();
-        ctx.arc(playerX * cellSize + cellSize / 2, playerY * cellSize + cellSize / 2, cellSize / 2 - 5, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        ctx.drawImage(ghostCanvas, (mazeSize - 2) * cellSize + cellSize / 2 - gctx.canvas.width / 2, (mazeSize - 2) * cellSize + cellSize / 2 - gctx.canvas.height / 2, gctx.canvas.width, gctx.canvas.height);
-    };
+    // Memory Game Variables
+    const memoryGameContainer = document.createElement('div');
+    memoryGameContainer.className = 'memory-game-container hidden';
     
-    const movePlayer = (e) => {
-        let newX = playerX;
-        let newY = playerY;
-        
-        if (e.key === 'ArrowUp') newY = playerY - 1;
-        if (e.key === 'ArrowDown') newY = playerY + 1;
-        if (e.key === 'ArrowLeft') newX = playerX - 1;
-        if (e.key === 'ArrowRight') newX = playerX + 1;
-
-        if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] !== 1) {
-            playerX = newX;
-            playerY = newY;
-            drawMaze();
-        }
-
-        if (playerX === mazeSize - 2 && playerY === mazeSize - 2) {
-            logMessage.innerHTML = 'Mission log: Maze completed! You have trapped the ghostly malware! Now, read about how to defend your home.';
-            defenseLink.classList.remove('hidden');
-            defenseLink.classList.add('pulse-animation');
-            window.removeEventListener('keydown', movePlayer);
+    const ghostImages = ['slimer', 'pke-meter', 'proton-pack', 'ghost-trap']; // Replace with your actual image file names without extension
+    let cards = [];
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+    let matchesFound = 0;
+    
+    const shuffle = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
         }
     };
-    
+
+    const createCards = () => {
+        const doubledImages = [...ghostImages, ...ghostImages];
+        shuffle(doubledImages);
+        memoryGameContainer.innerHTML = '';
+        cards = [];
+
+        doubledImages.forEach(imageName => {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'card';
+            cardElement.dataset.name = imageName;
+            
+            const cardInner = document.createElement('div');
+            cardInner.className = 'card-inner';
+
+            const cardFront = document.createElement('div');
+            cardFront.className = 'card-front';
+            const frontImg = document.createElement('img');
+            frontImg.src = `${imageName}_small.png`; // Use small versions of your images if available
+            frontImg.alt = imageName;
+            cardFront.appendChild(frontImg);
+
+            const cardBack = document.createElement('div');
+            cardBack.className = 'card-back';
+            const backImg = document.createElement('img');
+            backImg.src = 'ghostbusters_logo_small.png'; // A card back image
+            backImg.alt = 'Ghostbusters Logo';
+            cardBack.appendChild(backImg);
+
+            cardInner.appendChild(cardFront);
+            cardInner.appendChild(cardBack);
+            cardElement.appendChild(cardInner);
+            
+            cardElement.addEventListener('click', flipCard);
+            memoryGameContainer.appendChild(cardElement);
+            cards.push(cardElement);
+        });
+    };
+
+    const flipCard = (e) => {
+        if (lockBoard) return;
+        const clickedCard = e.currentTarget;
+        if (clickedCard === firstCard) return;
+
+        clickedCard.classList.add('flipped');
+
+        if (!firstCard) {
+            firstCard = clickedCard;
+            return;
+        }
+
+        secondCard = clickedCard;
+        checkForMatch();
+    };
+
+    const checkForMatch = () => {
+        const isMatch = firstCard.dataset.name === secondCard.dataset.name;
+        isMatch ? disableCards() : unflipCards();
+    };
+
+    const disableCards = () => {
+        firstCard.removeEventListener('click', flipCard);
+        secondCard.removeEventListener('click', flipCard);
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
+        matchesFound++;
+        if (matchesFound === ghostImages.length) {
+            setTimeout(() => {
+                logMessage.innerHTML = 'Mission log: You trapped all the ghosts! Now, read about how to defend your home.';
+                defenseLink.classList.remove('hidden');
+                defenseLink.classList.add('pulse-animation');
+            }, 500);
+        }
+        resetBoard();
+    };
+
+    const unflipCards = () => {
+        lockBoard = true;
+        setTimeout(() => {
+            firstCard.classList.remove('flipped');
+            secondCard.classList.remove('flipped');
+            resetBoard();
+        }, 1000);
+    };
+
+    const resetBoard = () => {
+        [firstCard, secondCard] = [null, null];
+        lockBoard = false;
+    };
+
     const typeWriter = (text, i, fnCallback) => {
         if (i < text.length) {
             commandElement.innerHTML += text.charAt(i);
@@ -157,19 +137,20 @@ document.addEventListener('DOMContentLoaded', () => {
         mazeContainer.classList.add('hidden');
         logMessage.innerText = 'Awaiting next action...';
         commandElement.innerHTML = '';
-        playerX = 1;
-        playerY = 1;
+        firstCard = null;
+        secondCard = null;
+        lockBoard = false;
+        matchesFound = 0;
         promptOkButton.classList.remove('pulse-animation');
         visibleZapButton.classList.remove('pulse-animation');
         defenseLink.classList.remove('pulse-animation');
-        window.removeEventListener('keydown', movePlayer);
 
         logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
         typeWriter(commandToType, 0, () => {
             blinkingCursor.style.animation = 'blink 1s step-end infinite';
             promptOkButton.classList.add('pulse-animation');
         });
-    }
+    };
 
     setTimeout(initializeGame, 100);
 
@@ -194,24 +175,21 @@ document.addEventListener('DOMContentLoaded', () => {
             investigateLogs();
         }, 3000);
     });
-
+    
     const investigateLogs = () => {
         logMessage.innerHTML = `
             <p style="color: yellow; font-weight: bold;">Mission Update 1: You tried to zap the Slimer!</p>
             <p style="color: red; font-weight: bold;">Mission Update 2: Whoa! The system ran "Release the captured ghosts" instead!</p>
             <br>
             <p style="color: red; font-weight: bold;">A sneaky ghost trick was used!</p>
-            <p>A sneaky ghost hijacked your click! It's hiding in the maze. Chase it down to trap it and fix the problem!</p>
+            <p>You have to trap the ghosts! Match the ghosts to win and fix the problem!</p>
         `;
 
         gameContainer.classList.add('hidden');
-        mazeContainer.classList.remove('hidden');
-        
-        generateMaze();
-        drawMaze(); 
+        mazeContainer.classList.add('hidden');
+        memoryGameContainer.classList.remove('hidden');
+        document.querySelector('.game-container').appendChild(memoryGameContainer);
 
-        window.addEventListener('keydown', movePlayer);
-
-        mobileControls.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const button = e.target.closest('button');
+        createCards();
+    };
+});
