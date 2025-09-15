@@ -74,7 +74,7 @@ header h2 {
 }
 
 .slimer-image {
-    max-width: 100%;
+    max-width: 50%; /* Adjusted to be half the size */
     height: auto;
     margin-bottom: 20px;
 }
@@ -243,10 +243,10 @@ header h2 {
     }
 
     .slimer-image {
-        max-width: 500px;
+        max-width: 50%;
     }
     .ghostbusters-image {
-        max-width: 400px; /* Adjusting the max-width to make it smaller on laptops */
+        max-width: 400px;
     }
 }
 
