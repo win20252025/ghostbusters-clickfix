@@ -85,8 +85,8 @@ header h2 {
 }
 
 .slimer-container .slimer-image {
-    width: 80%; /* A reasonable size for mobile */
-    max-width: 400px; /* Ensures it doesn't get too big */
+    width: 80%;
+    max-width: 400px;
     height: auto;
 }
 
