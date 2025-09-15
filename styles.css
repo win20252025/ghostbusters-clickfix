@@ -65,23 +65,33 @@ header h2 {
 }
 
 @keyframes blink {
-    from, to { color: transparent; }
-    50% { color: #2ecc71; }
+    from, to {
+        color: transparent;
+    }
+    50% {
+        color: #2ecc71;
+    }
 }
 
 .game-container {
     padding: 20px;
 }
 
-/* Image styling for mobile-first approach */
-.slimer-image {
-    max-width: 75%; /* Sized for mobile screens */
+.slimer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.slimer-container .slimer-image {
+    width: 80%; /* A reasonable size for mobile */
+    max-width: 400px; /* Ensures it doesn't get too big */
     height: auto;
-    margin-bottom: 20px;
 }
 
 .ghostbusters-image {
-    max-width: 80%; /* Sized for mobile screens */
+    max-width: 75%;
     height: auto;
 }
 
@@ -125,7 +135,7 @@ header h2 {
     padding: 20px;
     margin: 20px auto;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     max-width: 800px;
 }
 
@@ -157,7 +167,7 @@ header h2 {
     color: #fff;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     z-index: 2000;
     border: 3px solid #c0392b;
 }
@@ -202,10 +212,18 @@ header h2 {
     transform: translateY(2px);
 }
 
-.mobile-controls .up { grid-area: up; }
-.mobile-controls .down { grid-area: down; }
-.mobile-controls .left { grid-area: left; }
-.mobile-controls .right { grid-area: right; }
+.mobile-controls .up {
+    grid-area: up;
+}
+.mobile-controls .down {
+    grid-area: down;
+}
+.mobile-controls .left {
+    grid-area: left;
+}
+.mobile-controls .right {
+    grid-area: right;
+}
 
 /* Show controls on screens smaller than 768px */
 @media (max-width: 767px) {
@@ -240,10 +258,10 @@ header h2 {
     .game-button {
         padding: 20px 40px;
     }
-    
-    /* Responsive image sizing for larger screens */
-    .slimer-image {
-        max-width: 50%; /* Make it half-size for laptops */
+
+    /* Target specific images to make them a new size for laptops */
+    .slimer-container .slimer-image {
+        max-width: 50%;
     }
     .ghostbusters-image {
         max-width: 400px;
@@ -252,9 +270,15 @@ header h2 {
 
 /* Pulse animation */
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .pulse-animation {
