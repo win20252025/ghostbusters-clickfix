@@ -27,16 +27,39 @@ document.addEventListener('DOMContentLoaded', () => {
         [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1],
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
     ];
-    let finishX = 18; // X-coordinate of the ghost's position
-    let finishY = 1;  // Y-coordinate of the ghost's position
+    let finishX; // The ghost's final position
+    let finishY;
+
+    // Load the ghost image
+    const ghostImage = new Image();
+    ghostImage.src = 'ghost_icon.png';
+    const ghostImageSize = gridSize * 0.9;
+
+    // Function to find a random open cell for the ghost
+    const findRandomOpenCell = () => {
+        let openCells = [];
+        for (let y = 0; y < maze.length; y++) {
+            for (let x = 0; x < maze[y].length; x++) {
+                // Check if the cell is a path and not the start position
+                if (maze[y][x] === 0 && (x !== playerX || y !== playerY)) {
+                    openCells.push({ x, y });
+                }
+            }
+        }
+        // Select a random cell from the list
+        const randomIndex = Math.floor(Math.random() * openCells.length);
+        const randomCell = openCells[randomIndex];
+        finishX = randomCell.x;
+        finishY = randomCell.y;
+    };
 
     // Function to draw the maze walls
     const drawMaze = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas first
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let y = 0; y < maze.length; y++) {
             for (let x = 0; x < maze[y].length; x++) {
                 if (maze[y][x] === 1) {
-                    ctx.fillStyle = '#bdc3c7'; // Wall color
+                    ctx.fillStyle = '#bdc3c7';
                     ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
                 }
             }
@@ -45,24 +68,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to draw the player (Ghostbuster)
     const drawPlayer = () => {
-        ctx.fillStyle = '#f1c40f'; // Player color (Ghostbuster yellow)
+        ctx.fillStyle = '#f1c40f';
         ctx.beginPath();
         ctx.arc(playerX * gridSize + gridSize/2, playerY * gridSize + gridSize/2, playerSize, 0, Math.PI * 2);
         ctx.fill();
     };
 
-    // Function to draw the finish line (the ghost's location)
+    // Function to draw the ghost icon at the finish line
     const drawFinish = () => {
-        ctx.fillStyle = '#e74c3c'; // Red finish color
-        ctx.fillRect(finishX * gridSize, finishY * gridSize, gridSize, gridSize);
+        const imgX = finishX * gridSize + (gridSize - ghostImageSize) / 2;
+        const imgY = finishY * gridSize + (gridSize - ghostImageSize) / 2;
+        ctx.drawImage(ghostImage, imgX, imgY, ghostImageSize, ghostImageSize);
     };
 
-    // Function to check if the player has reached the finish line
+    // Function to check if the player has reached the ghost
     const checkWin = () => {
         if (playerX === finishX && playerY === finishY) {
             alert("You found the ghost! Mission complete!");
-            // Redirect to defense.html or the main game choice
-            window.location.href = "index.html"; // Changed to go back to main menu
+            window.location.href = "index.html";
         }
     };
 
@@ -70,11 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const handleMovement = (dx, dy) => {
         const newX = playerX + dx;
         const newY = playerY + dy;
-        // Check if the new position is within bounds and not a wall
         if (newY >= 0 && newY < maze.length && newX >= 0 && newX < maze[newY].length && maze[newY][newX] === 0) {
             playerX = newX;
             playerY = newY;
-            // Redraw everything after movement
             drawMaze();
             drawFinish();
             drawPlayer();
@@ -105,8 +126,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Initial drawing of the maze, finish line, and player
-    drawMaze();
-    drawFinish();
-    drawPlayer();
+    // Initial drawing of the maze, ghost, and player once the ghost image is loaded
+    ghostImage.onload = () => {
+        drawMaze();
+        drawFinish();
+        drawPlayer();
+    };
+
+    // Find the random ghost position when the page loads
+    findRandomOpenCell();
 });
