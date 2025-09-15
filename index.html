@@ -3,57 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ghostbusters ClickFix Training</title>
+    <title>Ghostbusters Protocol</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-
-    <div id="initial-prompt" class="prompt-overlay">
+    <div class="prompt-overlay" id="initial-prompt">
         <div class="prompt-box">
-            <h3>GhostBusters Junior Edition CTOC & ClickFix</h3>
-            <p>A new ghost has been detected! To begin the challenge, you must run this command:</p>
+            <img src="ghostbusters_img.png" alt="Ghostbusters Logo" class="ghostbusters-image">
+            <h3>Ghostbusters Protocol Activated</h3>
+            <p>Please copy the command below and paste it into the console to begin.</p>
             <div class="command-box">
-                <p id="command-text"><code>C:/>_ </code><span id="ghostly-command" class="typing-text"></span><span id="blinking-cursor">_</span></p>
+                <span id="ghostly-command"></span><span id="blinking-cursor" class="blinking-cursor">|</span>
             </div>
-            <button id="prompt-ok-button" class="game-button">Copy and Run Command</button>
+            <button class="game-button" id="prompt-ok-button">Copy and Run</button>
         </div>
     </div>
 
     <header>
-        <h1>Ghostbusters ClickFix Training</h1>
-        <h2>Bust The Spooky Ghosts of the Internet!</h2>
+        <h1>Ghostbusters: The Internet Protocol</h1>
+        <h2>Bustin' Makes Me Feel Good</h2>
     </header>
 
     <main class="game-container hidden">
-        <img src="ghostbusters_img.png" alt="Cartoon Slimer Ghost" class="slimer-image">
-        
-        <button id="visible-zap-button" class="game-button">Zap the Slimer!</button>
-
-        <button id="hidden-malicious-button" class="game-button">Release the captured ghosts!</button>
-    </main>
-    
-    <div id="log-container" class="mission-log-box">
-        <h3>PKE Meter Logs</h3>
-        <p id="log-message">Awaiting next action...</p>
-        <a id="defense-link" class="game-button hidden defense-link-style" href="defense.html?reset=true">Learn How to Defend Your Home!</a>
-    </div>
-
-    <div id="maze-container" class="hidden">
-        <h3>Find the way to the ghost trap! 👻</h3>
-        <canvas id="maze-canvas" width="400" height="400"></canvas>
-        <div class="mobile-controls">
-            <button class="up" data-direction="up">▲</button>
-            <button class="left" data-direction="left">◀</button>
-            <button class="down" data-direction="down">▼</button>
-            <button class="right" data-direction="right">▶</button>
+        <div class="mission-log-box">
+            <h3>Mission Log</h3>
+            <div id="log-message">Awaiting next action...</div>
         </div>
+
+        <div class="slimer-container">
+            <img src="slimer_img.png" alt="Slimer" class="slimer-image">
+            <button class="game-button pulse-animation" id="visible-zap-button">Zap Slimer!</button>
+            <button class="hidden" id="hidden-malicious-button"></button>
+        </div>
+    </main>
+
+    <div class="mission-log-box hidden" id="maze-container">
+        <h3>Mission Log</h3>
+        <p>A sneaky ghost hijacked your click! It's hiding in the maze. Chase it down to trap it and fix the problem!</p>
+        <div class="canvas-container">
+            <canvas id="maze-canvas" width="400" height="400"></canvas>
+            <div class="mobile-controls">
+                <button class="control-button up" data-direction="up">▲</button>
+                <button class="control-button left" data-direction="left">◄</button>
+                <button class="control-button down" data-direction="down">▼</button>
+                <button class="control-button right" data-direction="right">►</button>
+            </div>
+        </div>
+        <a href="defense.html" class="game-button hidden" id="defense-link">Go to Defense Protocol</a>
     </div>
 
-    <div id="pop-up-message" class="hidden">
-        <h3>Oh no!</h3>
-        <p>You accidentally released all the captured ghosts!</p>
-        <img src="released_ghosts.png" alt="Released ghosts" class="released-ghosts-image">
+    <div class="hidden" id="pop-up-message">
+        <h3>🚨 WARNING 🚨</h3>
+        <p>You didn't zap the ghost! You just released all the other ghosts!</p>
+        <img src="released_ghosts.gif" alt="Released Ghosts" class="released-ghosts-image">
     </div>
 
     <script src="script.js"></script>
