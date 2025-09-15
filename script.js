@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const memoryGameContainer = document.createElement('div');
     memoryGameContainer.className = 'memory-game-container hidden';
     
-    const ghostImages = ['slimer', 'pke-meter', 'proton-pack', 'ghost-trap']; 
+    // Updated: Added 'ghost_icon' to the list of images
+    const ghostImages = ['slimer', 'pke-meter', 'proton-pack', 'ghost-trap', 'ghost_icon']; 
     let cards = [];
     let firstCard = null;
     let secondCard = null;
@@ -50,14 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const cardFront = document.createElement('div');
             cardFront.className = 'card-front';
             const frontImg = document.createElement('img');
-            frontImg.src = `images/${imageName}.png`; // Updated path
+            frontImg.src = `images/${imageName}.png`;
             frontImg.alt = imageName;
             cardFront.appendChild(frontImg);
 
             const cardBack = document.createElement('div');
             cardBack.className = 'card-back';
             const backImg = document.createElement('img');
-            backImg.src = 'images/card_back.png'; // Updated path
+            backImg.src = 'images/card_back.png';
             backImg.alt = 'Card Back';
             cardBack.appendChild(backImg);
 
