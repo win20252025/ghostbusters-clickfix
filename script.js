@@ -208,8 +208,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (memoryGameButton) {
         memoryGameButton.addEventListener('click', () => {
             if (gameChoiceContainer) gameChoiceContainer.classList.add('hidden');
-            if (memoryGameContainer) memoryGameContainer.classList.remove('hidden');
-            if (gameContainer) gameContainer.appendChild(memoryGameContainer);
+            if (memoryGameContainer) {
+                // Remove existing memory game container if it exists
+                const existingMemoryGame = document.querySelector('.memory-game-container');
+                if (existingMemoryGame) {
+                    existingMemoryGame.remove();
+                }
+                
+                // Append a new, fresh memory game container
+                gameContainer.appendChild(memoryGameContainer);
+                memoryGameContainer.classList.remove('hidden');
+            }
             if (logMessage) logMessage.innerHTML = 'Mission Log: Ghost-matching protocol activated...';
             createCards();
         });
