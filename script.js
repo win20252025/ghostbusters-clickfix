@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const commandElement = document.getElementById('ghostly-command');
     const blinkingCursor = document.getElementById('blinking-cursor');
     const visibleZapButton = document.getElementById('visible-zap-button');
-    const mobileControls = document.querySelector('.mobile-controls'); // New: Get the mobile controls container
+    const mobileControls = document.querySelector('.mobile-controls');
 
     // Maze Game Variables
     const canvas = document.getElementById('maze-canvas');
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('keydown', movePlayer);
     };
 
-    // New: Handle mobile button clicks
+    // Handle mobile button clicks
     mobileControls.addEventListener('click', (e) => {
         const direction = e.target.dataset.direction;
         if (direction) {
