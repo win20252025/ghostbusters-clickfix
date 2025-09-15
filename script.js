@@ -156,4 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // A simple function to reset the game state
-    const reset
+    const resetGameState = () => {
+        initialPrompt.style.display = 'flex';
+        gameContainer.classList.add('hidden');
+        popUp.classList.add('hidden');
+        defenseLink.classList.add('hidden');
+        mazeContainer.classList.add('hidden');
+        logMessage.innerText = 'Awaiting next action...';
+        commandElement.innerHTML = '';
+        playerX = 0
