@@ -203,7 +203,8 @@ header h2 {
 
 /* Styles for the Ghostbusters image */
 .ghostbusters-image {
-    max-width: 75%;
+    width: 75%;
+    max-width: 300px;
     height: auto;
 }
 
@@ -244,9 +245,8 @@ header h2 {
     .slimer-image {
         max-width: 500px;
     }
-
     .ghostbusters-image {
-        max-width: 350px;
+        max-width: 400px; /* Adjusting the max-width to make it smaller on laptops */
     }
 }
 
