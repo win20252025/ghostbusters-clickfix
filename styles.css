@@ -170,7 +170,7 @@ header h2 {
 }
 
 .mobile-controls {
-    display: none; /* Hidden by default */
+    display: none;
     grid-template-areas: ". up ." "left down right";
     justify-items: center;
     align-items: center;
@@ -218,11 +218,11 @@ header h2 {
         margin-left: auto;
         margin-right: auto;
     }
-    
+
     header h1 {
         font-size: 4em;
     }
-    
+
     header h2 {
         font-size: 2em;
     }
@@ -237,6 +237,19 @@ header h2 {
 
     .slimer-image {
         max-width: 500px;
+    }
+}
+
+.ghostbusters-image {
+    width: 75%;
+    max-width: 300px;
+    height: auto;
+}
+
+/* New: Make Ghostbusters image smaller for laptops */
+@media (min-width: 768px) {
+    .ghostbusters-image {
+        width: 50%;
     }
 }
 
