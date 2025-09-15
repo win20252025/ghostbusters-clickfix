@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Maze Game Variables
     const canvas = document.getElementById('maze-canvas');
     const ctx = canvas.getContext('2d');
-    const mazeSize = 20;
+    const mazeSize = 21; // Must be odd for the algorithm to work correctly
     const cellSize = canvas.width / mazeSize;
-    let playerX = 0;
-    let playerY = 0;
+    let playerX = 1;
+    let playerY = 1;
     let maze = [];
 
     // Create a ghost icon directly on a hidden canvas
@@ -33,22 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
         gctx.clearRect(0, 0, cellSize, cellSize);
         gctx.fillStyle = '#2ecc71';
         gctx.beginPath();
-        // Body
         gctx.arc(cellSize / 2, cellSize * 0.4, cellSize * 0.3, 0, 2 * Math.PI);
-        // Feet
         gctx.arc(cellSize * 0.3, cellSize * 0.7, cellSize * 0.1, 0, 2 * Math.PI);
         gctx.arc(cellSize * 0.7, cellSize * 0.7, cellSize * 0.1, 0, 2 * Math.PI);
         gctx.arc(cellSize * 0.5, cellSize * 0.7, cellSize * 0.1, 0, 2 * Math.PI);
         gctx.fill();
         gctx.strokeStyle = '#000';
         gctx.stroke();
-        // Eyes
         gctx.fillStyle = '#fff';
         gctx.beginPath();
         gctx.arc(cellSize * 0.4, cellSize * 0.35, cellSize * 0.05, 0, 2 * Math.PI);
         gctx.arc(cellSize * 0.6, cellSize * 0.35, cellSize * 0.05, 0, 2 * Math.PI);
         gctx.fill();
-        // Mouth
         gctx.beginPath();
         gctx.strokeStyle = '#c0392b';
         gctx.lineWidth = 2;
@@ -56,36 +52,42 @@ document.addEventListener('DOMContentLoaded', () => {
         gctx.stroke();
     };
 
-    // Corrected maze generation
     const generateMaze = () => {
         maze = [];
         for (let y = 0; y < mazeSize; y++) {
             maze[y] = [];
             for (let x = 0; x < mazeSize; x++) {
-                // All cells are walls initially
-                maze[y][x] = 1;
+                maze[y][x] = 1; // All cells are walls initially
             }
         }
 
         const stack = [];
-        let current = { x: 0, y: 0 };
+        let current = { x: 1, y: 1 }; // Start from an odd-numbered cell
         maze[current.y][current.x] = 0; // Mark as path
         stack.push(current);
 
         while (stack.length > 0) {
             current = stack.pop();
             const neighbors = [];
-            
+
             // Check potential unvisited neighbors (2 cells away)
-            if (current.x > 1 && maze[current.y][current.x - 2] === 1) neighbors.push({ x: current.x - 2, y: current.y });
-            if (current.x < mazeSize - 2 && maze[current.y][current.x + 2] === 1) neighbors.push({ x: current.x + 2, y: current.y });
-            if (current.y > 1 && maze[current.y - 2][current.x] === 1) neighbors.push({ x: current.x, y: current.y - 2 });
-            if (current.y < mazeSize - 2 && maze[current.y + 2][current.x] === 1) neighbors.push({ x: current.x, y: current.y + 2 });
+            const possibleNeighbors = [
+                { x: current.x, y: current.y - 2 },
+                { x: current.x, y: current.y + 2 },
+                { x: current.x - 2, y: current.y },
+                { x: current.x + 2, y: current.y }
+            ];
+
+            for (const neighbor of possibleNeighbors) {
+                if (neighbor.x >= 1 && neighbor.x < mazeSize - 1 && neighbor.y >= 1 && neighbor.y < mazeSize - 1 && maze[neighbor.y][neighbor.x] === 1) {
+                    neighbors.push(neighbor);
+                }
+            }
 
             if (neighbors.length > 0) {
                 stack.push(current);
                 const next = neighbors[Math.floor(Math.random() * neighbors.length)];
-                
+
                 // Remove the wall between current and next cell
                 const wallX = current.x + (next.x - current.x) / 2;
                 const wallY = current.y + (next.y - current.y) / 2;
@@ -94,13 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 stack.push(next);
             }
         }
-        
-        // Ensure start and end are clear paths
-        maze[0][0] = 0;
-        maze[mazeSize - 1][mazeSize - 1] = 0;
     };
     
-    // Draw the maze
     const drawMaze = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let y = 0; y < mazeSize; y++) {
@@ -116,10 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.arc(playerX * cellSize + cellSize / 2, playerY * cellSize + cellSize / 2, cellSize / 2 - 5, 0, 2 * Math.PI);
         ctx.fill();
         
-        ctx.drawImage(ghostCanvas, (mazeSize - 1) * cellSize, (mazeSize - 1) * cellSize, cellSize, cellSize);
+        ctx.drawImage(ghostCanvas, (mazeSize - 2) * cellSize + cellSize / 2 - gctx.canvas.width / 2, (mazeSize - 2) * cellSize + cellSize / 2 - gctx.canvas.height / 2, gctx.canvas.width, gctx.canvas.height);
     };
-
-    // Handle player movement
+    
     const movePlayer = (e) => {
         let newX = playerX;
         let newY = playerY;
@@ -135,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             drawMaze();
         }
 
-        if (playerX === mazeSize - 1 && playerY === mazeSize - 1) {
+        if (playerX === mazeSize - 2 && playerY === mazeSize - 2) {
             logMessage.innerHTML = 'Mission log: Maze completed! You have trapped the ghostly malware! Now, read about how to defend your home.';
             defenseLink.classList.remove('hidden');
             defenseLink.classList.add('pulse-animation');
@@ -143,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    // Function to type the command
     const typeWriter = (text, i, fnCallback) => {
         if (i < text.length) {
             commandElement.innerHTML += text.charAt(i);
@@ -162,8 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
         mazeContainer.classList.add('hidden');
         logMessage.innerText = 'Awaiting next action...';
         commandElement.innerHTML = '';
-        playerX = 0;
-        playerY = 0;
+        playerX = 1;
+        playerY = 1;
         promptOkButton.classList.remove('pulse-animation');
         visibleZapButton.classList.remove('pulse-animation');
         defenseLink.classList.remove('pulse-animation');
@@ -176,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Wrap the initialization in a small delay to prevent a race condition
     setTimeout(initializeGame, 100);
 
     promptOkButton.addEventListener('click', () => {
@@ -200,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
             investigateLogs();
         }, 3000);
     });
-    
+
     const investigateLogs = () => {
         logMessage.innerHTML = `
             <p style="color: yellow; font-weight: bold;">Mission Update 1: You tried to zap the Slimer!</p>
@@ -212,27 +206,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         gameContainer.classList.add('hidden');
         mazeContainer.classList.remove('hidden');
+        
         generateMaze();
         drawMaze(); 
+
         window.addEventListener('keydown', movePlayer);
-        // Mobile controls listener
+
         mobileControls.addEventListener('touchstart', (e) => {
             e.preventDefault();
             const button = e.target.closest('button');
-            if (button) {
-                const direction = button.dataset.direction;
-                let key;
-                switch (direction) {
-                    case 'up': key = 'ArrowUp'; break;
-                    case 'down': key = 'ArrowDown'; break;
-                    case 'left': key = 'ArrowLeft'; break;
-                    case 'right': key = 'ArrowRight'; break;
-                }
-                const mockEvent = { key: key };
-                movePlayer(mockEvent);
-            }
-        });
-    };
-
-    drawGhostIcon();
-});
