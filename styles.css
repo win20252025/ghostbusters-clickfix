@@ -201,6 +201,12 @@ header h2 {
 .mobile-controls .left { grid-area: left; }
 .mobile-controls .right { grid-area: right; }
 
+/* Styles for the Ghostbusters image */
+.ghostbusters-image {
+    max-width: 75%;
+    height: auto;
+}
+
 /* Show controls on screens smaller than 768px */
 @media (max-width: 767px) {
     .mobile-controls {
@@ -238,19 +244,9 @@ header h2 {
     .slimer-image {
         max-width: 500px;
     }
-}
 
-.ghostbusters-image {
-    width: 75%;
-    max-width: 300px;
-    height: auto;
-}
-
-/* New: Make Ghostbusters image smaller for laptops */
-@media (min-width: 768px) {
     .ghostbusters-image {
-        width: 50%;
-        max-width: 300px; /* Optional: This keeps it from getting too big on very large screens */
+        max-width: 30%;
     }
 }
 
