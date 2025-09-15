@@ -74,8 +74,8 @@ header h2 {
 }
 
 .slimer-image {
-    max-width: 25%; /* Adjusted to be half the size */
-    height: auto;
+    max-width: 10%; /* Adjusted to be half the size */
+    max-height: 20%;
     margin-bottom: 20px;
 }
 
@@ -260,4 +260,5 @@ header h2 {
 .pulse-animation {
     animation: pulse 1.5s infinite;
 }
+
 
