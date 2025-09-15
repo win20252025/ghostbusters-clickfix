@@ -195,10 +195,12 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('keydown', movePlayer);
     };
 
-    // Handle mobile button clicks
-    mobileControls.addEventListener('click', (e) => {
-        const direction = e.target.dataset.direction;
-        if (direction) {
+    // New: Handle mobile button touches
+    mobileControls.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // This is important to prevent unwanted scrolling and delays
+        const button = e.target.closest('button');
+        if (button) {
+            const direction = button.dataset.direction;
             let key;
             switch (direction) {
                 case 'up': key = 'ArrowUp'; break;
