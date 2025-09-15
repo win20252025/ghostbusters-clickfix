@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const commandElement = document.getElementById('ghostly-command');
     const blinkingCursor = document.getElementById('blinking-cursor');
     const visibleZapButton = document.getElementById('visible-zap-button');
+    const mobileControls = document.querySelector('.mobile-controls'); // New: Get the mobile controls container
 
     // Maze Game Variables
     const canvas = document.getElementById('maze-canvas');
@@ -193,6 +194,23 @@ document.addEventListener('DOMContentLoaded', () => {
         drawMaze(); 
         window.addEventListener('keydown', movePlayer);
     };
-    
+
+    // New: Handle mobile button clicks
+    mobileControls.addEventListener('click', (e) => {
+        const direction = e.target.dataset.direction;
+        if (direction) {
+            let key;
+            switch (direction) {
+                case 'up': key = 'ArrowUp'; break;
+                case 'down': key = 'ArrowDown'; break;
+                case 'left': key = 'ArrowLeft'; break;
+                case 'right': key = 'ArrowRight'; break;
+            }
+            // Create a mock event object to pass to the existing movePlayer function
+            const mockEvent = { key: key };
+            movePlayer(mockEvent);
+        }
+    });
+
     drawGhostIcon();
 });
