@@ -208,13 +208,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (memoryGameButton) {
         memoryGameButton.addEventListener('click', () => {
+            // Hide the game choice and maze containers
             if (gameChoiceContainer) gameChoiceContainer.classList.add('hidden');
-            if (mazeContainer) mazeContainer.classList.add('hidden'); // Added line
+            if (mazeContainer) mazeContainer.classList.add('hidden');
             
-            // Check if the memory game container is not already a child of gameContainer
+            // Check if memoryGameContainer is already a child of gameContainer to prevent duplicates
             if (gameContainer && !gameContainer.contains(memoryGameContainer)) {
                 gameContainer.appendChild(memoryGameContainer);
             }
+
             memoryGameContainer.classList.remove('hidden');
             if (logMessage) logMessage.innerHTML = 'Mission Log: Ghost-matching protocol activated...';
             createCards();
@@ -225,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mazeGameButton.addEventListener('click', () => {
             if (gameChoiceContainer) gameChoiceContainer.classList.add('hidden');
             if (mazeContainer) mazeContainer.classList.remove('hidden');
+            if (memoryGameContainer) memoryGameContainer.classList.add('hidden');
             if (logMessage) logMessage.innerHTML = 'Mission Log: Maze protocol activated...';
         });
     }
