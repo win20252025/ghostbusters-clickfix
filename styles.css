@@ -250,6 +250,7 @@ header h2 {
 @media (min-width: 768px) {
     .ghostbusters-image {
         width: 50%;
+        max-width: 300px; /* Optional: This keeps it from getting too big on very large screens */
     }
 }
 
