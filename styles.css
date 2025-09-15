@@ -352,3 +352,8 @@ header h2 {
     text-align: center;
     margin-top: 20px;
 }
+
+/* New style to add padding to the paragraph in the game choice container */
+.game-choice-container p {
+    margin-bottom: 25px; /* Adjust this value as needed */
+}
