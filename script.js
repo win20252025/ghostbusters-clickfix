@@ -14,114 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const commandElement = document.getElementById('ghostly-command');
     const blinkingCursor = document.getElementById('blinking-cursor');
     const visibleZapButton = document.getElementById('visible-zap-button');
-    
-    // Memory Game Variables
-    const memoryGameContainer = document.createElement('div');
-    memoryGameContainer.className = 'memory-game-container hidden';
-    
-    // Corrected image names to match the files you have
-    const ghostImages = ['slimer', 'pke-meter', 'proton-pack', 'ghost-trap', 'ghost_icon']; 
-    let cards = [];
-    let firstCard = null;
-    let secondCard = null;
-    let lockBoard = false;
-    let matchesFound = 0;
-    
-    const shuffle = (array) => {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    };
-
-    const createCards = () => {
-        const doubledImages = [...ghostImages, ...ghostImages];
-        shuffle(doubledImages);
-        memoryGameContainer.innerHTML = '';
-        cards = [];
-
-        doubledImages.forEach(imageName => {
-            const cardElement = document.createElement('div');
-            cardElement.className = 'card';
-            cardElement.dataset.name = imageName;
-            
-            const cardInner = document.createElement('div');
-            cardInner.className = 'card-inner';
-
-            const cardFront = document.createElement('div');
-            cardFront.className = 'card-front';
-            const frontImg = document.createElement('img');
-            frontImg.src = `images/${imageName}.png`; 
-            frontImg.alt = imageName;
-            cardFront.appendChild(frontImg);
-
-            const cardBack = document.createElement('div');
-            cardBack.className = 'card-back';
-            const backImg = document.createElement('img');
-            backImg.src = 'images/card_back.png'; 
-            backImg.alt = 'Card Back';
-            cardBack.appendChild(backImg);
-
-            cardInner.appendChild(cardFront);
-            cardInner.appendChild(cardBack);
-            cardElement.appendChild(cardInner);
-            
-            cardElement.addEventListener('click', flipCard);
-            memoryGameContainer.appendChild(cardElement);
-            cards.push(cardElement);
-        });
-    };
-
-    const flipCard = (e) => {
-        if (lockBoard) return;
-        const clickedCard = e.currentTarget;
-        if (clickedCard === firstCard) return;
-
-        clickedCard.classList.add('flipped');
-
-        if (!firstCard) {
-            firstCard = clickedCard;
-            return;
-        }
-
-        secondCard = clickedCard;
-        checkForMatch();
-    };
-
-    const checkForMatch = () => {
-        const isMatch = firstCard.dataset.name === secondCard.dataset.name;
-        isMatch ? disableCards() : unflipCards();
-    };
-
-    const disableCards = () => {
-        firstCard.removeEventListener('click', flipCard);
-        secondCard.removeEventListener('click', flipCard);
-        firstCard.classList.add('matched');
-        secondCard.classList.add('matched');
-        matchesFound++;
-        if (matchesFound === ghostImages.length) {
-            setTimeout(() => {
-                logMessage.innerHTML = 'Mission log: You trapped all the ghosts! Now, read about how to defend your home.';
-                defenseLink.classList.remove('hidden');
-                defenseLink.classList.add('pulse-animation');
-            }, 500);
-        }
-        resetBoard();
-    };
-
-    const unflipCards = () => {
-        lockBoard = true;
-        setTimeout(() => {
-            firstCard.classList.remove('flipped');
-            secondCard.classList.remove('flipped');
-            resetBoard();
-        }, 1000);
-    };
-
-    const resetBoard = () => {
-        [firstCard, secondCard] = [null, null];
-        lockBoard = false;
-    };
 
     const typeWriter = (text, i, fnCallback) => {
         if (i < text.length) {
@@ -142,11 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (mazeContainer) mazeContainer.classList.add('hidden');
         if (logMessage) logMessage.innerText = 'Awaiting next action...';
         if (commandElement) commandElement.innerHTML = '';
-        
-        firstCard = null;
-        secondCard = null;
-        lockBoard = false;
-        matchesFound = 0;
         
         if (promptOkButton) promptOkButton.classList.remove('pulse-animation');
         if (visibleZapButton) visibleZapButton.classList.remove('pulse-animation');
@@ -206,28 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gameChoiceContainer) gameChoiceContainer.classList.remove('hidden');
     };
 
-    if (memoryGameButton) {
-        memoryGameButton.addEventListener('click', () => {
-            // Hide the game choice and maze containers
-            if (gameChoiceContainer) gameChoiceContainer.classList.add('hidden');
-            if (mazeContainer) mazeContainer.classList.add('hidden');
-            
-            // Check if memoryGameContainer is already a child of gameContainer to prevent duplicates
-            if (gameContainer && !gameContainer.contains(memoryGameContainer)) {
-                gameContainer.appendChild(memoryGameContainer);
-            }
-
-            memoryGameContainer.classList.remove('hidden');
-            if (logMessage) logMessage.innerHTML = 'Mission Log: Ghost-matching protocol activated...';
-            createCards();
-        });
-    }
-
     if (mazeGameButton) {
         mazeGameButton.addEventListener('click', () => {
             if (gameChoiceContainer) gameChoiceContainer.classList.add('hidden');
             if (mazeContainer) mazeContainer.classList.remove('hidden');
-            if (memoryGameContainer) memoryGameContainer.classList.add('hidden');
             if (logMessage) logMessage.innerHTML = 'Mission Log: Maze protocol activated...';
         });
     }
