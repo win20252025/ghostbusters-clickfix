@@ -39,18 +39,17 @@
         </div>
     </main>
 
-    <div class="mission-log-box hidden" id="maze-container">
-        <h3>Mission Log</h3>
-        <p>A sneaky ghost hijacked your click! It's hiding in the maze. Chase it down to trap it and fix the problem!</p>
-    </div>
-
     <div class="hidden" id="pop-up-message">
         <h3>🚨 WARNING 🚨</h3>
         <p>You didn't zap the ghost! You just released all the other ghosts!</p>
         <img src="released_ghosts.png" alt="Released Ghosts" class="released-ghosts-image">
     </div>
 
-    <a href="defense.html" class="game-button hidden" id="defense-link">Go to Defense Protocol</a>
+    <div class="hidden" id="game-choice-container">
+        <p>A sneaky ghost hijacked your click! It's time to bust them to fix the problem!</p>
+        <button class="game-button" id="maze-button">Chase the Ghost Through the Maze!</button>
+        <button class="game-button" id="memory-button">Match the Ghosts to Trap Them!</button>
+    </div>
 
     <script src="script.js"></script>
 </body>
