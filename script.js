@@ -156,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const initializeGame = () => {
-        // This function combines the reset logic and start intro logic
         initialPrompt.style.display = 'flex';
         gameContainer.classList.add('hidden');
         popUp.classList.add('hidden');
@@ -199,4 +198,43 @@ document.addEventListener('DOMContentLoaded', () => {
         logMessage.innerHTML = 'Mission Log: Ghosts have been released! Initializing log investigation...';
         setTimeout(() => {
             popUp.classList.add('hidden');
-            invest
+            investigateLogs();
+        }, 3000);
+    });
+    
+    const investigateLogs = () => {
+        logMessage.innerHTML = `
+            <p style="color: yellow; font-weight: bold;">Mission Update 1: You tried to zap the Slimer!</p>
+            <p style="color: red; font-weight: bold;">Mission Update 2: Whoa! The system ran "Release the captured ghosts" instead!</p>
+            <br>
+            <p style="color: red; font-weight: bold;">A sneaky ghost trick was used!</p>
+            <p>A sneaky ghost hijacked your click! It's hiding in the maze. Chase it down to trap it and fix the problem!</p>
+        `;
+
+        gameContainer.classList.add('hidden');
+        mazeContainer.classList.remove('hidden');
+        generateMaze();
+        drawMaze(); 
+        window.addEventListener('keydown', movePlayer);
+    };
+
+    // Handle mobile button touches
+    mobileControls.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        const button = e.target.closest('button');
+        if (button) {
+            const direction = button.dataset.direction;
+            let key;
+            switch (direction) {
+                case 'up': key = 'ArrowUp'; break;
+                case 'down': key = 'ArrowDown'; break;
+                case 'left': key = 'ArrowLeft'; break;
+                case 'right': key = 'ArrowRight'; break;
+            }
+            const mockEvent = { key: key };
+            movePlayer(mockEvent);
+        }
+    });
+
+    drawGhostIcon();
+});
