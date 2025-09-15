@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 maze[y][x] = 1; // Start with all walls
             }
         }
-        
+
         let path = [];
         let visited = new Set();
 
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        
+
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         maze[0][0] = 2; // Player start
         maze[mazeSize - 1][mazeSize - 1] = 3; // Ghost end
     };
-    
+
     // Draw the maze
     const drawMaze = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.beginPath();
         ctx.arc(playerX * cellSize + cellSize / 2, playerY * cellSize + cellSize / 2, cellSize / 2 - 5, 0, 2 * Math.PI);
         ctx.fill();
-        
+
         ctx.drawImage(ghostCanvas, (mazeSize - 1) * cellSize, (mazeSize - 1) * cellSize, cellSize, cellSize);
     };
 
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const movePlayer = (e) => {
         let newX = playerX;
         let newY = playerY;
-        
+
         if (e.key === 'ArrowUp') newY = playerY - 1;
         if (e.key === 'ArrowDown') newY = playerY + 1;
         if (e.key === 'ArrowLeft') newX = playerX - 1;
@@ -143,25 +143,5 @@ document.addEventListener('DOMContentLoaded', () => {
             window.removeEventListener('keydown', movePlayer);
         }
     };
-    
-    // Function to type the command
-    const typeWriter = (text, i, fnCallback) => {
-        if (i < text.length) {
-            commandElement.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(() => typeWriter(text, i, fnCallback), 100);
-        } else if (typeof fnCallback == 'function') {
-            fnCallback();
-        }
-    };
 
-    // A simple function to reset the game state
-    const resetGameState = () => {
-        initialPrompt.style.display = 'flex';
-        gameContainer.classList.add('hidden');
-        popUp.classList.add('hidden');
-        defenseLink.classList.add('hidden');
-        mazeContainer.classList.add('hidden');
-        logMessage.innerText = 'Awaiting next action...';
-        commandElement.innerHTML = '';
-        playerX = 0
+    // Function to
