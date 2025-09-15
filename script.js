@@ -156,27 +156,4 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // A simple function to reset the game state
-    const resetGameState = () => {
-        initialPrompt.style.display = 'flex';
-        gameContainer.classList.add('hidden');
-        popUp.classList.add('hidden');
-        defenseLink.classList.add('hidden');
-        mazeContainer.classList.add('hidden');
-        logMessage.innerText = 'Awaiting next action...';
-        commandElement.innerHTML = '';
-        playerX = 0;
-        playerY = 0;
-        promptOkButton.classList.remove('pulse-animation');
-        visibleZapButton.classList.remove('pulse-animation');
-        defenseLink.classList.remove('pulse-animation');
-        window.removeEventListener('keydown', movePlayer);
-    };
-
-    const startIntro = () => {
-        resetGameState();
-        logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
-        typeWriter(commandToType, 0, () => {
-            blinkingCursor.style.animation = 'blink 1s step-end infinite';
-            promptOkButton.classList.add('pulse-animation');
-        });
-    };
+    const reset
