@@ -10,7 +10,7 @@ body {
 .splash-container {
     width: 100vw;
     height: 100vh;
-    background-image: url('images/clicky.PNG');
+    background-image: url('clicky.PNG'); /* <--- UPDATED THIS LINE */
     background-size: cover;
     background-position: center;
     display: flex;
