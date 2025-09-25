@@ -9,25 +9,12 @@
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body>
-    <div class="prompt-overlay" id="initial-prompt">
-        <div class="prompt-box">
-            <img src="images/ghostbusters_img.png" alt="Ghostbusters Logo" class="ghostbusters-image">
-            <h3>Ghostbusters Protocol Activated</h3>
-            <p>Please copy the command below and paste it into the console to begin.</p>
-            <div class="command-box">
-                <span id="ghostly-command"></span><span id="blinking-cursor" class="blinking-cursor">|</span>
-            </div>
-            <img src="images/clicky.PNG" alt="Click Here" class="clicky-image">
-            <button class="game-button" id="prompt-ok-button">Copy and Run</button>
-        </div>
-    </div>
-
     <header>
         <h1>Ghostbusters: The Internet Protocol</h1>
         <h2>Bustin' Makes Me Feel Good</h2>
     </header>
 
-    <main class="game-container hidden">
+    <main class="game-container">
         <div class="mission-log-box">
             <h3>Mission Log</h3>
             <div id="log-message">Awaiting next action...</div>
@@ -37,6 +24,9 @@
             <button class="game-button pulse-animation" id="visible-zap-button">Zap Slimer!</button>
             <img src="images/slimer_img.png" alt="Slimer" class="slimer-image">
             <button class="hidden" id="hidden-malicious-button"></button>
+            <button class="game-button" id="start-game-button">
+                <img src="images/clicky.PNG" alt="Click Here">
+            </button>
         </div>
     </main>
     
