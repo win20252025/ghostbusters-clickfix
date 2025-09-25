@@ -234,6 +234,6 @@ header h2 {
 
 /* New CSS to resize the clicky.PNG image */
 .clicky-image {
-    max-width: 100%;
+    max-width: 100px;
     height: auto;
 }
