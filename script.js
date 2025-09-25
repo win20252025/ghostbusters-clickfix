@@ -2,30 +2,61 @@ document.addEventListener('DOMContentLoaded', () => {
     const hiddenButton = document.getElementById('hidden-malicious-button');
     const logMessage = document.getElementById('log-message');
     const popUp = document.getElementById('pop-up-message');
+    const initialPrompt = document.getElementById('initial-prompt');
+    const promptOkButton = document.getElementById('prompt-ok-button');
     const gameContainer = document.querySelector('.game-container');
     const defenseLink = document.getElementById('defense-link');
     const mazeContainer = document.getElementById('maze-container');
     const gameChoiceContainer = document.getElementById('game-choice-container');
     const memoryGameButton = document.getElementById('memory-game-button');
     const mazeGameButton = document.getElementById('maze-game-button');
+    const commandToType = '--release_all_ghosts';
+    const commandElement = document.getElementById('ghostly-command');
+    const blinkingCursor = document.getElementById('blinking-cursor');
     const visibleZapButton = document.getElementById('visible-zap-button');
-    const startGameButton = document.getElementById('start-game-button');
-    const startButtonContainer = document.querySelector('.start-button-container');
-
-    // Initial game state
-    gameContainer.classList.add('hidden');
-    gameChoiceContainer.classList.add('hidden');
-    mazeContainer.classList.add('hidden');
-    logMessage.innerText = 'Awaiting next action...';
     
-    if (startGameButton) {
-        startGameButton.addEventListener('click', () => {
-            gameContainer.classList.remove('hidden');
-            startButtonContainer.classList.add('hidden'); // Hide the start button
-            logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
-            if (visibleZapButton) {
-                visibleZapButton.classList.add('pulse-animation');
-            }
+    const typeWriter = (text, i, fnCallback) => {
+        if (i < text.length) {
+            commandElement.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(() => typeWriter(text, i, fnCallback), 100);
+        } else if (typeof fnCallback == 'function') {
+            fnCallback();
+        }
+    };
+
+    const initializeGame = () => {
+        if (initialPrompt) initialPrompt.style.display = 'flex';
+        if (gameContainer) gameContainer.classList.add('hidden');
+        if (gameChoiceContainer) gameChoiceContainer.classList.add('hidden');
+        if (popUp) popUp.classList.add('hidden');
+        if (defenseLink) defenseLink.classList.add('hidden');
+        if (mazeContainer) mazeContainer.classList.add('hidden');
+        if (logMessage) logMessage.innerText = 'Awaiting next action...';
+        if (commandElement) commandElement.innerHTML = '';
+        
+        if (promptOkButton) promptOkButton.classList.remove('pulse-animation');
+        if (visibleZapButton) visibleZapButton.classList.remove('pulse-animation');
+        if (defenseLink) defenseLink.classList.remove('pulse-animation');
+
+        if (logMessage) logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
+        if (commandElement && blinkingCursor && promptOkButton) {
+            typeWriter(commandToType, 0, () => {
+                blinkingCursor.style.animation = 'blink 1s step-end infinite';
+                promptOkButton.classList.add('pulse-animation');
+            });
+        }
+    };
+
+    initializeGame();
+
+    if (promptOkButton) {
+        promptOkButton.addEventListener('click', () => {
+            if (initialPrompt) initialPrompt.style.display = 'none';
+            if (gameContainer) gameContainer.classList.remove('hidden');
+            if (logMessage) logMessage.innerHTML = 'Mission Log: The command has been entered. Awaiting results...';
+            if (promptOkButton) promptOkButton.classList.remove('pulse-animation');
+            if (visibleZapButton) visibleZapButton.classList.add('pulse-animation');
         });
     }
 
