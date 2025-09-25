@@ -9,30 +9,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const memoryGameButton = document.getElementById('memory-game-button');
     const mazeGameButton = document.getElementById('maze-game-button');
     const visibleZapButton = document.getElementById('visible-zap-button');
-    
+    const startGameButton = document.getElementById('start-game-button');
+    const startButtonContainer = document.querySelector('.start-button-container');
+
     // Initial game state
-    // These lines are removed to make the game container visible immediately
-    // gameContainer.classList.add('hidden');
-    // startGameButton.classList.add('hidden');
+    gameContainer.classList.add('hidden');
     gameChoiceContainer.classList.add('hidden');
     mazeContainer.classList.add('hidden');
-
-    // Remove the startGameButton logic since the game is now visible by default
-    // if (startGameButton) {
-    //     startGameButton.addEventListener('click', () => {
-    //         gameContainer.classList.remove('hidden');
-    //         logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
-    //         startGameButton.classList.add('hidden');
-    //         visibleZapButton.classList.remove('hidden');
-    //         visibleZapButton.classList.add('pulse-animation');
-    //     });
-    // }
+    logMessage.innerText = 'Awaiting next action...';
     
-    // The main game content is now visible immediately.
-    // Let's set the initial log message and pulse animation.
-    logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
-    if (visibleZapButton) {
-        visibleZapButton.classList.add('pulse-animation');
+    if (startGameButton) {
+        startGameButton.addEventListener('click', () => {
+            gameContainer.classList.remove('hidden');
+            startButtonContainer.classList.add('hidden'); // Hide the start button
+            logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
+            if (visibleZapButton) {
+                visibleZapButton.classList.add('pulse-animation');
+            }
+        });
     }
 
     if (visibleZapButton) {
