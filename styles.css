@@ -17,35 +17,29 @@ header h2 {
     font-size: 1.5em;
 }
 
-/* Set up a CSS variable for easy responsive scaling */
-:root {
-    --clicky-image-size: 60vw; /* Default size for mobile, 60% of viewport width */
-}
-
-/* New: Hero Section Styles */
-.hero-section {
+/* Direct container for the intro */
+.intro-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 70vh;
 }
 
-.hero-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
+/* Mobile-first image styles: 20-40% larger */
+.clicky-image {
+    width: 80%; /* Takes up 80% of its container width on mobile */
+    min-height: 40vh; /* A minimum height of 40% of the viewport height */
+    object-fit: contain; /* Ensures the image is fully visible */
 }
 
-/* Image styles for full width and proportional height */
-.clicky-image {
-    width: 100%; /* Image fills the width of its container */
-    max-width: var(--clicky-image-size); /* Use the CSS variable for dynamic sizing */
-    height: auto;
-    max-height: 50vh; /* Limits the height to 50% of the viewport height */
-    object-fit: contain; /* Ensures the entire image is visible without being cropped */
-    border-radius: 10px;
+/* Media query for laptops: double the size */
+@media (min-width: 768px) {
+    .clicky-image {
+        width: 100%; /* Take up the full width of the container */
+        max-width: 800px; /* Limit the max width for very large screens */
+        min-height: 70vh; /* Set a minimum height of 70% of viewport height */
+    }
 }
 
 .game-button {
@@ -117,30 +111,4 @@ header h2 {
     animation: pulse 1.5s infinite;
 }
 
-/* Media query for laptops and larger screens */
-@media (min-width: 768px) {
-    :root {
-        --clicky-image-size: 800px; /* Double the size for laptops */
-    }
-
-    .game-container,
-    .mission-log-box,
-    #maze-container,
-    .game-choice-container {
-        max-width: 900px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    header h1 {
-        font-size: 4em;
-    }
-
-    header h2 {
-        font-size: 2em;
-    }
-
-    .game-button {
-        padding: 20px 40px;
-    }
-}
+/* Rest of your existing CSS styles */
