@@ -17,12 +17,17 @@ header h2 {
     font-size: 1.5em;
 }
 
+/* Set up a CSS variable for easy responsive scaling */
+:root {
+    --clicky-image-size: 60vw; /* Default size for mobile, 60% of viewport width */
+}
+
 /* New: Hero Section Styles */
 .hero-section {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 70vh; /* Takes up a significant portion of the viewport height */
+    min-height: 70vh;
 }
 
 .hero-content {
@@ -36,7 +41,7 @@ header h2 {
 /* Image styles for full width and proportional height */
 .clicky-image {
     width: 100%; /* Image fills the width of its container */
-    max-width: 800px; /* Optional: Sets a maximum width to prevent it from getting too large on very big screens */
+    max-width: var(--clicky-image-size); /* Use the CSS variable for dynamic sizing */
     height: auto;
     max-height: 50vh; /* Limits the height to 50% of the viewport height */
     object-fit: contain; /* Ensures the entire image is visible without being cropped */
@@ -112,4 +117,30 @@ header h2 {
     animation: pulse 1.5s infinite;
 }
 
-/* Rest of your existing CSS styles */
+/* Media query for laptops and larger screens */
+@media (min-width: 768px) {
+    :root {
+        --clicky-image-size: 800px; /* Double the size for laptops */
+    }
+
+    .game-container,
+    .mission-log-box,
+    #maze-container,
+    .game-choice-container {
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    header h1 {
+        font-size: 4em;
+    }
+
+    header h2 {
+        font-size: 2em;
+    }
+
+    .game-button {
+        padding: 20px 40px;
+    }
+}
