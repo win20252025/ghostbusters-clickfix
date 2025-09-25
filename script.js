@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameChoiceContainer = document.getElementById('game-choice-container');
     const memoryGameButton = document.getElementById('memory-game-button');
     const mazeGameButton = document.getElementById('maze-game-button');
-    const visibleZapButton = document.getElementById('visible-zap-button');
     
     // Initial game state: show the pop-up and hide everything else
     if (initialPrompt) initialPrompt.style.display = 'flex';
@@ -27,13 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (initialPrompt) initialPrompt.style.display = 'none';
             if (gameChoiceContainer) gameChoiceContainer.classList.remove('hidden');
             if (logMessage) logMessage.innerHTML = 'Mission Log: A new mission has been activated! Your goal is to bust the spooky ghosts of the internet!';
-        });
-    }
-
-    if (visibleZapButton) {
-        visibleZapButton.addEventListener('click', () => {
-            if (hiddenButton) hiddenButton.click();
-            if (visibleZapButton) visibleZapButton.classList.remove('pulse-animation');
         });
     }
 
