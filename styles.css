@@ -10,9 +10,10 @@ body {
 .splash-container {
     width: 100vw;
     height: 100vh;
-    background-image: url('clicky.PNG'); /* <--- UPDATED THIS LINE */
-    background-size: cover;
+    background-image: url('clicky.PNG');
+    background-size: contain; /* Ensures the whole image is visible and scaled to fit */
     background-position: center;
+    background-repeat: no-repeat; /* Prevents the image from repeating */
     display: flex;
     justify-content: center;
     align-items: center;
