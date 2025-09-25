@@ -11,12 +11,30 @@ body {
     width: 100vw;
     height: 100vh;
     background-image: url('clicky.PNG');
-    background-size: 80% auto; /* 80% width, auto height for mobile */
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Base size for small screens (default) */
+.splash-container {
+    background-size: 80vw auto; /* Image will be 80% of the viewport width */
+}
+
+/* Media query for mobile devices */
+@media (min-width: 480px) {
+    .splash-container {
+        background-size: 60vw auto; /* Make the image slightly larger on most phones */
+    }
+}
+
+/* Media query for laptops and larger devices */
+@media (min-width: 768px) {
+    .splash-container {
+        background-size: 800px auto; /* Set a specific, larger pixel size for laptops */
+    }
 }
 
 .game-button {
@@ -58,12 +76,5 @@ body {
     }
     100% {
         transform: scale(1);
-    }
-}
-
-/* Media query for laptops and larger devices */
-@media (min-width: 768px) {
-    .splash-container {
-        background-size: 600px 400px; /* Specific pixel size for laptops */
     }
 }
