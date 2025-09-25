@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const splashPage = document.getElementById('splash-page');
+    const heroSection = document.getElementById('hero-section');
     const startButton = document.getElementById('start-button');
     const gameChoiceContainer = document.getElementById('game-choice-container');
     const header = document.querySelector('header');
@@ -9,21 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const mazeContainer = document.getElementById('maze-container');
     const logMessage = document.getElementById('log-message');
 
-    // Show the splash page initially
-    splashPage.classList.remove('hidden');
+    // Hide the game choices initially
+    gameChoiceContainer.classList.add('hidden');
 
     // Event listener to start the game
     if (startButton) {
         startButton.addEventListener('click', () => {
-            // Start the fade-out animation
-            splashPage.classList.add('fade-out');
-
-            // After the animation, hide the splash page and show the game content
-            setTimeout(() => {
-                splashPage.classList.add('hidden');
-                header.classList.remove('hidden');
-                gameChoiceContainer.classList.remove('hidden');
-            }, 1000); // The delay should match the transition duration in CSS
+            heroSection.classList.add('hidden');
+            gameChoiceContainer.classList.remove('hidden');
         });
     }
 
