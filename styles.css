@@ -17,7 +17,6 @@ header h2 {
     font-size: 1.5em;
 }
 
-/* Use CSS Grid for reliable full-screen centering */
 .prompt-overlay {
     position: fixed;
     top: 0;
@@ -26,17 +25,18 @@ header h2 {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     display: grid;
-    place-items: center; /* This centers the content both horizontally and vertically */
+    place-items: center;
     z-index: 1000;
 }
 
 .prompt-box {
     background-color: #34495e;
-    padding: 80px; /* Increased padding for a larger size */
+    /* Use viewport units for responsive scaling */
+    padding: 5vh 5vw; 
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     border: 3px solid #f1c40f;
-    max-width: 90%; /* Increased max-width for a larger pop-up */
+    max-width: 90%;
 }
 
 .prompt-box h3 {
