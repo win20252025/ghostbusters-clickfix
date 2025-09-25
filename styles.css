@@ -33,9 +33,13 @@ header h2 {
     padding: 20px;
 }
 
+/* Image styles for full width and proportional height */
 .clicky-image {
-    max-width: 80vw; /* Scales with viewport width */
+    width: 100%; /* Image fills the width of its container */
+    max-width: 800px; /* Optional: Sets a maximum width to prevent it from getting too large on very big screens */
     height: auto;
+    max-height: 50vh; /* Limits the height to 50% of the viewport height */
+    object-fit: contain; /* Ensures the entire image is visible without being cropped */
     border-radius: 10px;
 }
 
