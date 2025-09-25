@@ -245,8 +245,8 @@ header h2 {
     }
     
     .prompt-box {
-        padding: 80px; /* Double the padding for laptops */
-        max-width: 90%; /* Increase max-width for a larger pop-up */
+        padding: 80px;
+        max-width: 90%;
     }
 
     header h1 {
