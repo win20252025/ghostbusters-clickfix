@@ -11,9 +11,9 @@ body {
     width: 100vw;
     height: 100vh;
     background-image: url('clicky.PNG');
-    background-size: contain; /* Ensures the whole image is visible and scaled to fit */
+    background-size: 80% auto; /* 80% width, auto height for mobile */
     background-position: center;
-    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,5 +58,12 @@ body {
     }
     100% {
         transform: scale(1);
+    }
+}
+
+/* Media query for laptops and larger devices */
+@media (min-width: 768px) {
+    .splash-container {
+        background-size: 600px 400px; /* Specific pixel size for laptops */
     }
 }
