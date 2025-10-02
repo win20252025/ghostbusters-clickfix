@@ -3,16 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ghostbusters Protocol</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <title>Clicky</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #23272e 0%, #181c23 100%);
+            color: #fff;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        .center-content {
+            background: rgba(0,0,0,0.5);
+            border: 2px solid #39ff14;
+            border-radius: 16px;
+            box-shadow: 0 0 24px #39ff1455;
+            padding: 2rem 2.5rem;
+            max-width: 1000px;
+            width: 100%;
+            margin: 2rem auto;
+            text-align: center;
+        }
+        .clicky-img {
+            display: block;
+            margin: 0 auto 1.2rem auto;
+            width: 100%;
+            max-width: 900px;
+            min-width: 300px;
+            max-height: 75vh; /* Increased from 60vh to 75vh */
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 0 16px #39ff1455;
+        }
+        .pulse-btn {
+            display: block;
+            margin: 0 auto;
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #23272e;
+            background: #39ff14;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 8px #39ff14, 0 0 2px #fff;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+            text-decoration: none;
+            width: 80%;
+            max-width: 340px;
+        }
+        .pulse-btn:hover, .pulse-btn:focus {
+            background: #ff4141;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        @media (max-width: 1200px) {
+            .center-content {
+                max-width: 98vw;
+            }
+            .clicky-img {
+                max-width: 98vw;
+            }
+        }
+        @media (max-width: 900px) {
+            .center-content {
+                padding: 1.5rem 1rem;
+            }
+            .clicky-img {
+                max-width: 98vw;
+            }
+            .pulse-btn {
+                width: 90%;
+                max-width: 320px;
+            }
+        }
+        @media (max-width: 600px) {
+            .center-content {
+                padding: 1rem 0.5rem;
+            }
+            .pulse-btn {
+                font-size: 1rem;
+                padding: 0.6rem 1.2rem;
+                width: 98%;
+                max-width: 98vw;
+            }
+            .clicky-img {
+                max-width: 100vw;
+                min-width: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-    <main class="splash-container">
-        <a href="games.html" class="game-link">
-            <button class="game-button pulse-animation">Click Here</button>
-        </a>
+    <main>
+        <section class="center-content">
+            <img src="images/clicky.png" alt="Clicky" class="clicky-img">
+            <a href="games.html" class="pulse-btn">Click Here</a>
+        </section>
     </main>
 </body>
 </html>
