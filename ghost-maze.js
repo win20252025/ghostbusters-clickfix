@@ -113,10 +113,15 @@ function handleMobile(dir) {
 }
 
 function setupMobileControls() {
-    document.getElementById('up-btn').onclick = () => handleMobile('up');
-    document.getElementById('down-btn').onclick = () => handleMobile('down');
-    document.getElementById('left-btn').onclick = () => handleMobile('left');
-    document.getElementById('right-btn').onclick = () => handleMobile('right');
+    const addFastEvent = (id, dir) => {
+        const btn = document.getElementById(id);
+        btn.ontouchstart = (e) => { e.preventDefault(); handleMobile(dir); };
+        btn.onmousedown = () => handleMobile(dir); // fallback for desktop
+    };
+    addFastEvent('up-btn', 'up');
+    addFastEvent('down-btn', 'down');
+    addFastEvent('left-btn', 'left');
+    addFastEvent('right-btn', 'right');
 }
 
 // --- Utility ---
