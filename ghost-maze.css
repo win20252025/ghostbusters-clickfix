@@ -114,8 +114,14 @@
     .mobile-controls {
         display: block;
     }
+    .mobile-controls button {
+        font-size: 2.5rem;
+        padding: 1rem 2rem;
+        min-width: 64px;
+        min-height: 64px;
+    }
     .maze-cell {
-        width: 32px;    /* Larger for touch and visibility */
+        width: 32px;
         height: 32px;
     }
     .ghost-player,
