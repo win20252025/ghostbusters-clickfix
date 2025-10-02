@@ -117,26 +117,17 @@
     .maze-cell {
         width: 36px;    /* Larger for touch and visibility */
         height: 36px;
-        border-width: 2px !important; /* Thicker border for walls */
-        box-sizing: border-box;
-        padding: 0;
-        overflow: visible;
     }
     .ghost-player,
     .ghost-exit {
-        font-size: 2rem;
+        font-size: 1.4rem;
         line-height: 36px;
         height: 36px;
         width: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
     .ball-shape {
         width: 20px;
         height: 20px;
-        margin: auto;
-        display: block;
     }
 }
 #maze-container, .maze-cell, .wall {
