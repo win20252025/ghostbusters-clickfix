@@ -123,10 +123,13 @@
     .maze-cell {
         width: 32px;
         height: 32px;
-        display: flex;
-        alighn-items: center;
-        justify-content: center;
         box-sizing: border-box;
+    }
+    .player-ball {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fffbe7;
     }
     .ghost-player,
     .ghost-exit {
@@ -136,21 +139,12 @@
         width: 32px;
     }
     .ball-shape {
-        width: 12px;
-        height: 12px;
+        width: 14px;
+        height: 14px;
         border: 2px solid #23272e;
         box-sizing: border-box;
         margin: 0;
         display: block;
-    }
-    .ghost-emoji {
-        font-size: 1.1rem !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        line-height: 1;
     }
 }
 #maze-container, .maze-cell, .wall {
