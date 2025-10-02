@@ -1,7 +1,12 @@
 // --- Maze Configuration ---
-const MAZE_WIDTH = 21;
-const MAZE_HEIGHT = 15;
+let MAZE_WIDTH = 21;
+let MAZE_HEIGHT = 15;
 
+//Adjust maze size for mobile
+if (window.innerWidth <= 600) {
+    MAZE_WIDTH = 11;
+    MAZE_HEIGHT = 9;
+}
 // --- DOM Elements ---
 const mazeContainer = document.getElementById('maze-container');
 const winMessage = document.getElementById('win-message');
