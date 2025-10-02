@@ -108,17 +108,25 @@
     #maze-container {
         max-width: 100vw;
         width: 100vw;
-        border-width: 2px; /* Thinner border for small screens */
-        overflow-x: auto; /* Add horizontal scroll if needed */
+        border-width: 2px;
+        overflow-x: auto;
     }
     .mobile-controls {
         display: block;
     }
     .maze-cell {
-        width: 18px;   /* Slightly larger than 16px for better touch targets */
-        height: 18px;
-        border-width: 1px !important; /* Ensure border is visible */
-        min-width: 16px;
-        min-height: 16px;
+        width: 32px;    /* Larger for touch and visibility */
+        height: 32px;
+        border-width: 2px !important; /* Thicker border for walls */
+        box-sizing: border-box;
     }
+    .wall {
+        border: 2px solid #444 !important; /* Thicker wall lines */
+    }
+}
+#maze-container, .maze-cell, .wall {
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
