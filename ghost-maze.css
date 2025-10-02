@@ -123,6 +123,10 @@
     .maze-cell {
         width: 32px;
         height: 32px;
+        display: flex;
+        alighn-items: center;
+        justify-content: center;
+        box-sizing: border-box;
     }
     .ghost-player,
     .ghost-exit {
@@ -132,8 +136,12 @@
         width: 32px;
     }
     .ball-shape {
-        width: 4px;
-        height: 10px;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #23272e;
+        box-sizing: border-box;
+        margin: 0;
+        display: block;
     }
     .ghost-emoji {
         font-size: 1.1rem !important;
