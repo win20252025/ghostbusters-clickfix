@@ -115,19 +115,19 @@
         display: block;
     }
     .maze-cell {
-        width: 36px;    /* Larger for touch and visibility */
-        height: 36px;
+        width: 32px;    /* Larger for touch and visibility */
+        height: 32px;
     }
     .ghost-player,
     .ghost-exit {
-        font-size: 1.4rem;
-        line-height: 36px;
-        height: 36px;
-        width: 36px;
+        font-size: 1.1rem;
+        line-height: 32px;
+        height: 32px;
+        width: 32;
     }
     .ball-shape {
-        width: 20px;
-        height: 20px;
+        width: 10px;
+        height: 10px;
     }
 }
 #maze-container, .maze-cell, .wall {
