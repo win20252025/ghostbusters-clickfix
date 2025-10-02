@@ -1,0 +1,119 @@
+#maze-container {
+    display: grid;
+    margin: 2rem auto;
+    background: #181c23;
+    border: 4px solid #39ff14;
+    border-radius: 12px;
+    box-shadow: 0 0 24px #39ff1455;
+    width: 100%;
+    max-width: 90vw;
+    overflow-x: auto;
+    justify-content: center;
+    align-items: center;
+    transition: box-shadow 0.3s;
+}
+.maze-cell {
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.6rem;
+    box-sizing: border-box;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.wall {
+    background: #23272e;
+    border: 1px solid #444;
+}
+.path {
+    background: #fffbe7;
+}
+.ghost-player {
+    background: #fffbe7;
+    color: #39ff14;
+    font-size: 2rem;
+    filter: drop-shadow(0 0 6px #39ff14);
+}
+.ghost-exit {
+    background: #fffbe7;
+    color: #ff4141;
+    font-size: 2rem;
+    filter: drop-shadow(0 0 6px #ff4141);
+    transition: filter 0.2s;
+}
+.player-ball {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fffbe7;
+}
+.ball-shape {
+    width: 18px;
+    height: 18px;
+    background: #39f; /* Appealing blue */
+    border-radius: 50%;
+    border: 2px solid #23272e;
+    box-shadow: 0 0 8px #39f, 0 0 2px #fff;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.mobile-controls {
+    display: none;
+    margin: 1rem auto 0 auto;
+    text-align: center;
+}
+.mobile-controls button {
+    font-size: 2rem;
+    margin: 0.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: #23272e;
+    color: #39ff14;
+    box-shadow: 0 0 6px #39ff1455;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.mobile-controls button:active {
+    background: #39ff14;
+    color: #23272e;
+}
+.win-message {
+    color: #ff4141;
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    text-shadow: 0 0 8px #ff4141, 0 0 2px #fff;
+    animation: pop 0.7s;
+}
+@keyframes pop {
+    0% { transform: scale(0.7); opacity: 0; }
+    70% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+@media (max-width: 1200px) {
+    .maze-cell {
+        width: 28px;
+        height: 28px;
+    }
+}
+@media (max-width: 900px) {
+    #maze-container {
+        max-width: 100vw;
+    }
+    .maze-cell {
+        width: 22px;
+        height: 22px;
+    }
+}
+@media (max-width: 600px) {
+    #maze-container {
+        transform: scale(0.7);
+        max-width: 100vw;
+    }
+    .mobile-controls {
+        display: block;
+    }
+    .maze-cell {
+        width: 16px;
+        height: 16px;
+    }
+}

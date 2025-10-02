@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghostbusters Home</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #23272e 0%, #181c23 100%);
+            color: #fff;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        .center-content {
+            background: rgba(0,0,0,0.5);
+            border: 2px solid #39ff14;
+            border-radius: 16px;
+            box-shadow: 0 0 24px #39ff1455;
+            padding: 2rem 2.5rem;
+            max-width: 700px;
+            width: 100%;
+            margin: 2rem auto;
+            text-align: center;
+        }
+        .ghostbusters-title {
+            color: #39ff14;
+            text-shadow: 0 0 12px #39ff14, 0 0 2px #fff;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            font-family: 'Segoe UI Black', 'Arial Black', Arial, sans-serif;
+        }
+        .pulse-btn {
+            display: inline-block;
+            margin: 1rem 0.5rem;
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #23272e;
+            background: #39ff14;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 8px #39ff14, 0 0 2px #fff;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+            text-decoration: none;
+        }
+        .pulse-btn:hover, .pulse-btn:focus {
+            background: #ff4141;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        .responsive-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-top: 2rem;
+            box-shadow: 0 0 16px #39ff1455;
+        }
+        footer {
+            flex-shrink: 0;
+            text-align: center;
+            color: #aaa;
+            padding: 1rem 0;
+            font-size: 1rem;
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid #39ff14;
+        }
+        .game-buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 1rem; /* space between buttons */
+        }
+        @media (max-width: 900px) {
+            .center-content {
+                padding: 1.5rem 1rem;
+            }
+            .ghostbusters-title {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .center-content {
+                padding: 1rem 0.5rem;
+            }
+            .ghostbusters-title {
+                font-size: 1.3rem;
+            }
+            .pulse-btn {
+                font-size: 1rem;
+                padding: 0.6rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="center-content">
+            <h1 class="ghostbusters-title">Welcome to Ghostbusters Games!</h1>
+            <p>Choose a game.</p>
+            <div class="game-buttons">
+                <a href="memory.html" class="pulse-btn">Match the ghosts</a>
+                <a href="ghost-maze.html" class="pulse-btn">Ghost Maze</a>
+            </div>
+            <img src="images/released_ghosts.png" alt="Released Ghosts" class="responsive-img">
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost Maze</title>
+    <link rel="stylesheet" href="ghost-maze.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <main>
+        <section class="center-content">
+            <h1 class="ghostbusters-title">Ghost Maze</h1>
+            <div id="maze-container"></div>
+            <div id="mobile-controls" class="mobile-controls">
+                <button id="up-btn">⬆️</button>
+                <div>
+                    <button id="left-btn">⬅️</button>
+                    <button id="down-btn">⬇️</button>
+                    <button id="right-btn">➡️</button>
+                </div>
+            </div>
+            <div id="win-message" class="win-message" style="display:none;">
+                <span>🎉 You caught the ghost! 🎉</span>
+            </div>
+            <a href="games.html" class="pulse-btn" style="margin-top:2rem;">Back to Games</a>
+        </section>
+    </main>
+    <audio id="win-sound" src="win.mp3" preload="auto"></audio>
+    <script src="ghost-maze.js"></script>
+</body>
+</html>

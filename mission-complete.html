@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Complete!</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #23272e 0%, #181c23 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .celebrate {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+        }
+        .card {
+            background: #fff;
+            color: #23272e;
+            border-radius: 22px;
+            box-shadow: 0 4px 32px 0 rgba(0,0,0,0.18);
+            padding: 2.5rem 2.5rem 2rem 2.5rem;
+            max-width: 480px;
+            width: 95vw;
+            margin: 2rem auto;
+            text-align: center;
+            position: relative;
+            animation: popin 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes popin {
+            0% { transform: scale(0.7); opacity: 0; }
+            70% { transform: scale(1.08); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        .confetti {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            animation: confetti-pop 1.2s;
+        }
+        @keyframes confetti-pop {
+            0% { transform: scale(0.5) rotate(-20deg); opacity: 0; }
+            60% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        .main-title {
+            font-size: 2.1rem;
+            font-weight: bold;
+            color: #f7b731;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+        .mission-message {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #23272e;
+        }
+        .note-message {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #388e3c;
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            display: inline-block;
+        }
+        .warning-section {
+            background: #f9fafb;
+            border-radius: 14px;
+            padding: 1.2rem 1rem 1.2rem 1.2rem;
+            margin-bottom: 1.5rem;
+            border-left: 6px solid #f7b731;
+            text-align: left;
+        }
+        .warning-section h2 {
+            color: #f7b731;
+            font-size: 1.1rem;
+            margin: 0 0 0.7rem 0;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .ghost-list {
+            margin: 0.5rem 0 0 0;
+            padding: 0;
+            list-style: none;
+        }
+        .ghost-list li {
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6em;
+            font-size: 1.08em;
+        }
+        .ghost-icon {
+            font-size: 1.2em;
+            margin-right: 0.3em;
+        }
+        .shield-icon {
+            font-size: 1.2em;
+            margin-right: 0.3em;
+        }
+        .pulse-btn {
+            display: block;
+            margin: 1.5rem auto 0 auto;
+            padding: 1rem 2.2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(90deg, #f7b731 60%, #f5cd79 100%);
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 12px #f7b73155;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .pulse-btn:hover, .pulse-btn:focus {
+            background: linear-gradient(90deg, #f5cd79 60%, #f7b731 100%);
+            color: #23272e;
+            transform: scale(1.05);
+        }
+        @media (max-width: 600px) {
+            .card {
+                padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+            }
+            .main-title {
+                font-size: 1.3rem;
+            }
+            .pulse-btn {
+                font-size: 1rem;
+                padding: 0.7rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="celebrate">
+        <div class="card">
+            <div class="confetti">🎉</div>
+            <div class="main-title">Mission Complete!</div>
+            <div class="mission-message">
+                Congratulations! You completed the game and caught the ghost!
+            </div>
+            <div class="note-message">
+                Don't forget to collect your Slime or Swag.
+            </div>
+            <div class="warning-section">
+                <h2>Think before you Click(Fix):<br> Understanding the ClickFix Social Engineering Trick</h2>
+                <ul class="ghost-list">
+                    <li><span class="ghost-icon">👻</span>The ClickFix trick tries to get you to run bad commands by pretending to help you fix small problems or do things like human verification.</li>
+                    <li><span class="ghost-icon">👻</span>It may tell you to click things and copy, paste, and run commands in Windows Run, Terminal, or PowerShell.</li>
+                    <li><span class="ghost-icon">👻</span>Attackers often pretend to be real companies or use fake ads and emails to make you trust them.</li>
+                </ul>
+                <strong style="display:block;margin:1rem 0 0.5rem 0;">How to Defend:</strong>
+                <ul class="ghost-list">
+                    <li><span class="shield-icon">🛡️</span>Never run commands from people or websites you don't trust.</li>
+                    <li><span class="shield-icon">🛡️</span>Be careful if someone asks you to copy/paste or run code, especially if it feels urgent or routine.</li>
+                    <li><span class="shield-icon">🛡️</span>Ask a trusted adult or IT expert before doing anything you're unsure about.</li>
+                    <li><span class="shield-icon">🛡️</span>Remember: Real companies will never ask you to run strange commands on your computer.</li>
+                </ul>
+            </div>
+            <a href="games.html" class="pulse-btn">Back to Games</a>
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 Clicky &mdash; All Rights Reserved
+    </footer>
+</body>
+</html>
