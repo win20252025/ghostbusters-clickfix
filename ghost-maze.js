@@ -56,7 +56,10 @@ function renderMaze() {
                 cell.appendChild(ball);
             } else if (exitPos.x === x && exitPos.y === y) {
                 cell.classList.add('ghost-exit');
-                cell.textContent = '👻';
+                const ghost = document.createElement('span');
+                ghost.className = 'ghost-emoji';
+                ghost.textContent = '👻';
+                cell.appendChild(ghost);
             }
             mazeContainer.appendChild(cell);
         }
