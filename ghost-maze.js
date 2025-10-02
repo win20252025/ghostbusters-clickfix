@@ -115,8 +115,13 @@ function handleMobile(dir) {
 function setupMobileControls() {
     const addFastEvent = (id, dir) => {
         const btn = document.getElementById(id);
-        btn.ontouchstart = (e) => { e.preventDefault(); handleMobile(dir); };
-        btn.onmousedown = () => handleMobile(dir); // fallback for desktop
+        btn.ontouchstart = (e) => {
+            e.preventDefault();
+            handleMobile(dir);
+        };
+        // Prevent double-tap zoom
+        btn.addEventListener('touchend', e => e.preventDefault());
+        btn.addEventListener('dblclick', e => e.preventDefault());
     };
     addFastEvent('up-btn', 'up');
     addFastEvent('down-btn', 'down');
