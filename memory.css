@@ -67,9 +67,13 @@
         min-width: 70px;
         min-height: 90px;
     }
-    .memory-card-front img,
-    .memory-card-back img {
+    .memory-card-front img {
         width: 60%;
         height: 60%;
+    }
+    /* Make only the card back image smaller on mobile */
+    .memory-card-back img {
+        width: 40% !important;
+        height: 40% !important;
     }
 }
