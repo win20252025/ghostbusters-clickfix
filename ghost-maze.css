@@ -37,7 +37,7 @@
 .ghost-exit {
     background: #fffbe7;
     color: #ff4141;
-    font-size: 2rem;
+    font-size: 2rem; /* 👻 RESTORED original font size for desktop/tablet visibility */
     filter: drop-shadow(0 0 6px #ff4141);
     transition: filter 0.2s;
 }
@@ -109,7 +109,7 @@
         max-width: 100vw;
         width: 100%;
         border-width: 2px;
-        overflow-x: hidden; /* Prevent horizontal scrolling */
+        overflow-x: hidden; /* Stop horizontal scrolling */
     }
     .mobile-controls {
         display: block;
@@ -121,11 +121,11 @@
         min-height: 64px;
     }
     
-    /* 🔑 SLIGHT CHANGE: Use VW units to scale the cells based on screen width */
+    /* 🔑 Final Minimal Fix: Use VW for mobile cells */
     .maze-cell {
         /*
-         * The mobile maze is 11 cells wide. 100vw / 11 is ~9.09vw.
-         * Using 8.5vw ensures the 11 cells and maze borders all fit within 100vw.
+         * Since the mobile maze is 11 cells wide, 8.5vw is a safe value 
+         * (11 * 8.5vw = 93.5vw) to fit the maze within the screen width (100vw).
          */
         width: 8.5vw; 
         height: 8.5vw; 
@@ -135,7 +135,7 @@
     /* Adjust content sizing to fit the new 8.5vw cells */
     .ghost-player,
     .ghost-exit {
-        font-size: 0.9rem;
+        font-size: 1.5rem; /* 👻 Slightly smaller font to fit the cell */
         line-height: 8.5vw;
         height: 8.5vw;
         width: 8.5vw;
