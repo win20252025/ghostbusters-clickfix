@@ -12,19 +12,15 @@
     align-items: center;
     transition: box-shadow 0.3s;
 }
-
-/* Base size for desktop/large screens (21x15 maze) */
 .maze-cell {
-    width: 38px; /* Restored explicit width */
-    height: 38px; /* Restored explicit height */
+    width: 38px;
+    height: 38px;
     text-align: center;
     vertical-align: middle;
     font-size: 1.6rem;
     box-sizing: border-box;
     transition: background 0.2s, box-shadow 0.2s;
-    /* Remove aspect-ratio from here as it conflicts with explicit width/height */
 }
-
 .wall {
     background: #23272e;
     border: 1px solid #444;
@@ -93,14 +89,10 @@
     70% { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(1); }
 }
-
-/* --- Media Queries (Adjusted) --- */
-
 @media (max-width: 1200px) {
     .maze-cell {
         width: 28px;
         height: 28px;
-        /* Ensure aspect-ratio is NOT here to respect explicit sizing */
     }
 }
 @media (max-width: 900px) {
@@ -110,16 +102,27 @@
     .maze-cell {
         width: 22px;
         height: 22px;
-        /* Ensure aspect-ratio is NOT here to respect explicit sizing */
     }
 }
 @media (max-width: 600px) {
+    /* 🔑 KEY FIXES START HERE */
     #maze-container {
+        /* This allows the container to render at its intended pixel size */
         max-width: 100vw;
-        width: 100vw;
+        width: max-content; 
         border-width: 2px;
-        overflow-x: hidden; /* Prevent horizontal scrolling */
+        overflow-x: hidden; /* Hide any unwanted horizontal scrolling */
+        
+        /* * Scale the entire maze container down if the screen is too small.
+         * The '380px' is a safe estimate for the full pixel width of the 11x9 maze (11 cells * 32px + borders/margins).
+         * 'min(1, ...)' ensures it only shrinks, never grows.
+         */
+        transform-origin: top center;
+        transform: scale(min(1, (100vw - 40px) / 380px)); 
+        margin: 2rem auto; /* Re-center after scale */
     }
+    /* 🔑 KEY FIXES END HERE */
+    
     .mobile-controls {
         display: block;
     }
@@ -129,15 +132,11 @@
         min-width: 64px;
         min-height: 64px;
     }
-    
-    /* 🔑 FIX: Remove fixed width/height and use aspect-ratio */
     .maze-cell {
-        width: auto;
-        height: auto; 
-        aspect-ratio: 1 / 1; /* Makes the height match the width set by the '1fr' grid */
+        width: 32px;
+        height: 32px;
         box-sizing: border-box;
     }
-
     .player-ball {
         display: flex;
         align-items: center;
@@ -147,12 +146,9 @@
     .ghost-player,
     .ghost-exit {
         font-size: 1.1rem;
-        line-height: 1; 
-        height: 100%; 
-        width: 100%; 
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        line-height: 32px;
+        height: 32px;
+        width: 32px;
     }
     .ball-shape {
         width: 14px;
