@@ -47,10 +47,8 @@ function generateMaze(width, height) {
 // --- Maze Rendering ---
 function renderMaze() {
     mazeContainer.innerHTML = '';
-    // ⬇️ THIS LINE IS THE KEY CHANGE ⬇️
-    // It uses '1fr' to make all columns equal width, ensuring the maze fills the screen on mobile.
-    mazeContainer.style.gridTemplateColumns = `repeat(${MAZE_WIDTH}, 1fr)`;
-    // ⬆️ END OF KEY CHANGE ⬆️
+    // 🔑 ORIGINAL LINE RESTORED: Uses fixed minmax values for grid columns.
+    mazeContainer.style.gridTemplateColumns = `repeat(${MAZE_WIDTH}, minmax(16px, 38px))`;
     
     for (let y = 0; y < MAZE_HEIGHT; y++) {
         for (let x = 0; x < MAZE_WIDTH; x++) {
@@ -67,7 +65,6 @@ function renderMaze() {
                 cell.classList.add('ghost-exit');
                 const ghost = document.createElement('span');
                 ghost.className = 'ghost-emoji';
-                ghost.textContent = '👻';
                 cell.appendChild(ghost);
             }
             mazeContainer.appendChild(cell);
