@@ -202,6 +202,15 @@ function handleChoice(choice) {
 }
 
 function showResults() {
+  // *** REDIRECTION LOGIC ADDED HERE ***
+  // Check if the player achieved a perfect score
+  if (score === emails.length) {
+    // Redirect to mission-complete.html for a perfect score
+    window.location.href = "mission-complete.html";
+    return; // Stop the function
+  }
+  // **********************************
+
   let reviewHTML = emails.map((email, idx) => {
     const initials = email.sender.split('@')[0].split(' ').map(w => w[0]).join('').toUpperCase();
     const fakeDate = getRandomDate(idx);
