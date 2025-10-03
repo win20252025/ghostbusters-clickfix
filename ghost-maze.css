@@ -12,15 +12,19 @@
     align-items: center;
     transition: box-shadow 0.3s;
 }
+
+/* Base size for desktop/large screens (21x15 maze) */
 .maze-cell {
-    width: 38px;
-    height: 38px;
+    width: 38px; /* Restored explicit width */
+    height: 38px; /* Restored explicit height */
     text-align: center;
     vertical-align: middle;
     font-size: 1.6rem;
     box-sizing: border-box;
     transition: background 0.2s, box-shadow 0.2s;
+    /* Remove aspect-ratio from here as it conflicts with explicit width/height */
 }
+
 .wall {
     background: #23272e;
     border: 1px solid #444;
@@ -89,10 +93,14 @@
     70% { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(1); }
 }
+
+/* --- Media Queries (Adjusted) --- */
+
 @media (max-width: 1200px) {
     .maze-cell {
         width: 28px;
         height: 28px;
+        /* Ensure aspect-ratio is NOT here to respect explicit sizing */
     }
 }
 @media (max-width: 900px) {
@@ -102,6 +110,7 @@
     .maze-cell {
         width: 22px;
         height: 22px;
+        /* Ensure aspect-ratio is NOT here to respect explicit sizing */
     }
 }
 @media (max-width: 600px) {
@@ -109,8 +118,7 @@
         max-width: 100vw;
         width: 100vw;
         border-width: 2px;
-        /* Remove overflow-x: auto if you want the maze to always fit */
-        overflow-x: hidden; 
+        overflow-x: hidden; /* Prevent horizontal scrolling */
     }
     .mobile-controls {
         display: block;
@@ -122,19 +130,13 @@
         min-height: 64px;
     }
     
-    /* ⬇️ KEY CHANGES FOR MOBILE SIZING ⬇️ */
+    /* 🔑 FIX: Remove fixed width/height and use aspect-ratio */
     .maze-cell {
-        /*
-         * Remove fixed width/height (32px) and let the '1fr' grid
-         * definition in JS set the width.
-         */
         width: auto;
         height: auto; 
-        /* Ensure the cell is always square (1:1 aspect ratio) */
-        aspect-ratio: 1 / 1; 
+        aspect-ratio: 1 / 1; /* Makes the height match the width set by the '1fr' grid */
         box-sizing: border-box;
     }
-    /* ⬆️ END OF KEY CHANGES ⬆️ */
 
     .player-ball {
         display: flex;
@@ -145,9 +147,9 @@
     .ghost-player,
     .ghost-exit {
         font-size: 1.1rem;
-        line-height: 1; /* Adjust for better vertical centering */
-        height: 100%; /* Fill the cell height */
-        width: 100%; /* Fill the cell width */
+        line-height: 1; 
+        height: 100%; 
+        width: 100%; 
         display: flex;
         align-items: center;
         justify-content: center;
