@@ -66,7 +66,7 @@ function showIntro() {
         </div>
         <p style="font-weight:bold;color:#2563eb;text-align:center;margin-top:1.5em;">Ready to begin?</p>
       </div>
-      <button id="start-btn" class="choice-btn" style="margin-top:24px;font-size:1.15em;padding:16px 36px;">
+      <button id="start-btn" class="pulse-btn" style="margin-top:24px;font-size:1.15em;padding:16px 36px;">
         Start Game &rarr;
       </button>
     </div>
@@ -120,12 +120,12 @@ function showEmail(index) {
   let actionButtons = '';
   if (!answered) {
     actionButtons = `
-      <button class="choice-btn" id="yes-btn">ClickFix: Yes</button>
-      <button class="choice-btn" id="no-btn">ClickFix: No</button>
+      <button class="pulse-btn" id="yes-btn">ClickFix: Yes</button>
+      <button class="pulse-btn" id="no-btn">ClickFix: No</button>
     `;
   } else {
     actionButtons = `
-      <button class="choice-btn" id="next-btn">${currentEmail + 1 === emails.length ? "See Results" : "Next Email"}</button>
+      <button class="pulse-btn" id="next-btn">${currentEmail + 1 === emails.length ? "See Results" : "Next Email"}</button>
     `;
   }
 
@@ -249,8 +249,8 @@ function showResults() {
       
       <!-- Button Row for Play Again and Mission Complete -->
       <div style="display:flex; justify-content:center; gap: 1rem; margin-top: 1.5rem; margin-bottom: 2rem;">
-        <button id="restart-btn" class="choice-btn">Play Again</button>
-        <button id="go-to-mission-btn" class="choice-btn" style="background: #39ff14; color: #23272e; box-shadow: 0 0 8px #39ff14, 0 0 2px #fff; transition: background 0.2s, transform 0.2s;">
+        <button id="restart-btn" class="pulse-btn">Play Again</button>
+        <button id="go-to-mission-btn" class="pulse-btn" style="background: #39ff14; color: #23272e; box-shadow: 0 0 8px #39ff14, 0 0 2px #fff; transition: background 0.2s, transform 0.2s;">
           Mission Complete Page
         </button>
       </div>
