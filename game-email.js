@@ -202,15 +202,14 @@ function handleChoice(choice) {
 }
 
 function showResults() {
-  // *** REDIRECTION LOGIC ADDED HERE ***
   // Check if the player achieved a perfect score
   if (score === emails.length) {
     // Redirect to mission-complete.html for a perfect score
     window.location.href = "mission-complete.html";
     return; // Stop the function
   }
-  // **********************************
 
+  // --- Logic for non-perfect scores (Game Over) ---
   let reviewHTML = emails.map((email, idx) => {
     const initials = email.sender.split('@')[0].split(' ').map(w => w[0]).join('').toUpperCase();
     const fakeDate = getRandomDate(idx);
@@ -247,11 +246,21 @@ function showResults() {
     <div class="email-preview" style="text-align:center;">
       <h2>Game Over!</h2>
       <p>You correctly identified ${score} out of ${emails.length} emails.</p>
-      <button id="restart-btn" class="choice-btn">Play Again</button>
+      
+      <!-- Button Row for Play Again and Mission Complete -->
+      <div style="display:flex; justify-content:center; gap: 1rem; margin-top: 1.5rem; margin-bottom: 2rem;">
+        <button id="restart-btn" class="choice-btn">Play Again</button>
+        <button id="go-to-mission-btn" class="choice-btn" style="background: #39ff14; color: #23272e; box-shadow: 0 0 8px #39ff14, 0 0 2px #fff; transition: background 0.2s, transform 0.2s;">
+          Mission Complete Page
+        </button>
+      </div>
+      
       <h3 style="margin-top:32px;">Review All Emails</h3>
       <div style="max-height:50vh;overflow-y:auto;text-align:left;">${reviewHTML}</div>
     </div>
   `;
+  
+  // Event listener for the "Play Again" button
   document.getElementById('restart-btn').onclick = () => {
     currentEmail = 0;
     score = 0;
@@ -259,6 +268,11 @@ function showResults() {
     showExplanation = false;
     answered = false;
     showEmail(currentEmail);
+  };
+  
+  // Event listener for the NEW "Mission Complete Page" button
+  document.getElementById('go-to-mission-btn').onclick = () => {
+      window.location.href = "mission-complete.html";
   };
 }
 
