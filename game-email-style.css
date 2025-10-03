@@ -123,12 +123,12 @@ body {
   flex-wrap: wrap;
 }
 
-.email-actions-row .choice-btn {
+.email-actions-row .pulse-btn {
   margin-left: 8px;
   margin-right: 8px;
 }
 
-.choice-btn {
+.pulse-btn {
   padding: 12px 28px;
   background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
   color: #fff;
@@ -149,7 +149,7 @@ body {
   100% { box-shadow: 0 0 0 0 rgba(37,99,235, 0); }
 }
 
-.choice-btn:hover, .choice-btn:focus {
+.pulse-btn:hover, .pulse-btn:focus {
   background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
   color: #fff;
   animation: none;
