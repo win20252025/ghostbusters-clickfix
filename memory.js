@@ -14,7 +14,7 @@ const sounds = {
     flip: new Audio("sounds/flip.mp3"),
     match: new Audio("sounds/powerup.mp3"),
     mismatch: new Audio("sounds/buzz.mp3"),
-    win: new Audio("sounds/ghostbusters-theme.mp3")
+    win: new Audio("sounds/win.mp3")
 };
 
 function playSound(name) {
