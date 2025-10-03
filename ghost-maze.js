@@ -47,9 +47,7 @@ function generateMaze(width, height) {
 // --- Maze Rendering ---
 function renderMaze() {
     mazeContainer.innerHTML = '';
-    // 🔑 ORIGINAL LINE RESTORED: Uses fixed minmax values for grid columns.
     mazeContainer.style.gridTemplateColumns = `repeat(${MAZE_WIDTH}, minmax(16px, 38px))`;
-    
     for (let y = 0; y < MAZE_HEIGHT; y++) {
         for (let x = 0; x < MAZE_WIDTH; x++) {
             const cell = document.createElement('div');
@@ -65,6 +63,7 @@ function renderMaze() {
                 cell.classList.add('ghost-exit');
                 const ghost = document.createElement('span');
                 ghost.className = 'ghost-emoji';
+                ghost.textContent = '👻';
                 cell.appendChild(ghost);
             }
             mazeContainer.appendChild(cell);
@@ -189,3 +188,4 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
