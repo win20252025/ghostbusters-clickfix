@@ -71,9 +71,5 @@
         width: 60%;
         height: 60%;
     }
-    /* Make only the card back image smaller on mobile */
-    .memory-card-back img {
-        width: 40% !important;
-        height: 40% !important;
-    }
+    /* The specific rule for .memory-card-back img has been removed to fix the small image issue on mobile. */
 }
