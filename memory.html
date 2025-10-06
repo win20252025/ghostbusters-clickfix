@@ -7,13 +7,16 @@
     <!-- Load Tailwind CSS for modern styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom styles for the responsive game layout and button aesthetics */
+        /* Base styles */
         .center-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 1rem;
+            position: relative; /* Needed for absolute positioning of the message box */
         }
+        
+        /* Button Styles */
         .pulse-btn {
             padding: 0.75rem 1.5rem;
             background-color: #f7b731; /* Ghostly yellow/orange */
@@ -28,11 +31,12 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
-        /* Placeholder styling for the memory game grid */
+
+        /* Memory Game Grid Styles */
         .memory-game {
             width: 100%;
             max-width: 400px; 
-            height: 400px;
+            aspect-ratio: 1 / 1; /* Ensures the grid is square */
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 0.5rem;
@@ -41,6 +45,58 @@
             border-radius: 0.75rem;
             padding: 0.5rem;
             box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+            perspective: 1000px; /* Gives the 3D flip effect */
+        }
+
+        /* Card Styles */
+        .card {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+            border-radius: 0.5rem;
+            user-select: none;
+            height: 100%;
+        }
+
+        /* Flip state for 3D rotation */
+        .card.flip {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden; /* Hides the reverse side */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem; /* Emoji size */
+            border-radius: 0.5rem;
+        }
+
+        /* Card Back (Default view) */
+        .card-back {
+            background-color: #f7b731; /* Yellow/Orange back */
+            color: #1a202c;
+            transform: rotateY(0deg);
+            border: 3px solid #1a202c;
+            font-weight: 700;
+        }
+
+        /* Card Front (Revealed ghost/icon) */
+        .card-front {
+            background-color: #4c566a; /* Slate color for a spooky feel */
+            color: #f7b731;
+            transform: rotateY(180deg);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        
+        /* Matched card effect */
+        .card-front.matched {
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.9); /* Teal glow for matched cards */
         }
     </style>
 </head>
@@ -56,6 +112,11 @@
             <p class="text-xl text-gray-300 font-medium max-w-lg text-center mb-6">
                 **Objective:** Flip two cards to reveal the ghosts. Find all matching pairs to win the game!
             </p>
+
+            <!-- Message Box (Placed absolutely for visibility) -->
+            <div id="message-box" class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 text-teal-300 px-6 py-3 rounded-xl shadow-2xl z-20 text-center text-2xl font-bold border-2 border-teal-500 pointer-events-none">
+                <!-- Messages go here -->
+            </div>
             
             <!-- Game Container -->
             <div id="memory-game" class="memory-game">
@@ -63,62 +124,200 @@
             </div>
             
             <!-- Back Button -->
-            <a href="games.html" class="pulse-btn" style="margin-top:2rem;">
+            <a href="games.html" class="pulse-btn mt-6">
                 Back to Games
             </a>
         </section>
         
         <!-- Audio tag removed as the source file (sounds/win.mp3) is not provided -->
-        <!-- <audio id="win-sound" src="sounds/win.mp3" preload="auto"></audio> -->
     </main>
 
     <script>
-        // Placeholder JavaScript for game initialization and card flipping logic.
-        // The original memory.js content would go here.
+        // --- GAME LOGIC START ---
         
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log("Memory Game loaded. Logic must be implemented here.");
+        // Define the ghost/spooky assets for the cards
+        const GHOST_ICONS = [
+            '😈', '👹', '👺', '🤡',
+            '🤖', '👽', '💀', '👻'
+        ];
+
+        let cardArray = [];
+        let hasFlippedCard = false;
+        let lockBoard = false;
+        let firstCard = null;
+        let secondCard = null;
+        let matchesFound = 0;
+        const totalPairs = GHOST_ICONS.length;
+        let gameContainer;
+        let messageBox;
+
+        // Utility function to display messages
+        function displayMessage(text) {
+            messageBox.textContent = text;
+            messageBox.classList.remove('hidden');
             
-            const gameContainer = document.getElementById('memory-game');
+            // Hide the message after a delay if it's not a win message
+            if (matchesFound < totalPairs) {
+                setTimeout(() => messageBox.classList.add('hidden'), 1500);
+            }
+        }
+
+        // Fisher-Yates shuffle algorithm for better randomness
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]
+                ];
+            }
+            return array;
+        }
+        
+        function setupGame() {
+            // 1. Create pairs of icons and shuffle
+            cardArray = [...GHOST_ICONS, ...GHOST_ICONS];
+            cardArray = shuffle(cardArray);
             
-            // Simple function to create a placeholder card for visualization
-            const createCard = () => {
+            // 2. Clear board and reset state
+            gameContainer.innerHTML = '';
+            matchesFound = 0;
+            lockBoard = false;
+            hasFlippedCard = false;
+            firstCard = null;
+            secondCard = null;
+            
+            // Ensure message box is hidden
+            messageBox.classList.add('hidden');
+
+            // 3. Create card elements
+            cardArray.forEach(icon => {
                 const card = document.createElement('div');
-                // Styling the card back
-                card.className = 'w-full h-full bg-gray-700 rounded-lg flex items-center justify-center text-4xl text-yellow-500 cursor-pointer hover:bg-gray-600 transition duration-150 ease-in-out';
-                card.innerHTML = '❓'; // Card back icon
-                card.addEventListener('click', () => handleCardFlip(card));
-                return card;
-            };
-            
-            // Populate the grid with 16 placeholder cards (assuming 8 pairs)
-            for (let i = 0; i < 16; i++) {
-                gameContainer.appendChild(createCard());
+                card.classList.add('card');
+                // Store the icon as a data attribute for matching
+                card.setAttribute('data-framework', icon); 
+                
+                // Front face (revealed icon)
+                const cardFront = document.createElement('div');
+                cardFront.classList.add('card-face', 'card-front');
+                cardFront.textContent = icon;
+                
+                // Back face (question mark)
+                const cardBack = document.createElement('div');
+                cardBack.classList.add('card-face', 'card-back');
+                cardBack.textContent = '❓';
+
+                card.appendChild(cardFront);
+                card.appendChild(cardBack);
+                
+                card.addEventListener('click', flipCard);
+                gameContainer.appendChild(card);
+            });
+        }
+
+        function flipCard() {
+            // 1. If board is locked (waiting for unflip), ignore click
+            if (lockBoard) return;
+            // 2. Prevent clicking the same card twice
+            if (this === firstCard) return;
+
+            // Flip the card
+            this.classList.add('flip');
+
+            if (!hasFlippedCard) {
+                // This is the first card flipped
+                hasFlippedCard = true;
+                firstCard = this;
+                return;
             }
 
-            let flippedCards = [];
+            // This is the second card flipped
+            secondCard = this;
             
-            function handleCardFlip(card) {
-                // Placeholder logic
-                if (card.dataset.flipped || flippedCards.length === 2) return;
-                
-                card.dataset.flipped = 'true';
-                card.innerHTML = '👻'; // Placeholder ghost reveal
-                flippedCards.push(card);
-                
-                if (flippedCards.length === 2) {
-                    // In a real game, you'd check for a match and update the UI accordingly.
-                    setTimeout(() => {
-                        console.log("Checking for match...");
-                        flippedCards.forEach(c => {
-                            c.dataset.flipped = 'false';
-                            c.innerHTML = '❓'; // Flip back
-                        });
-                        flippedCards = [];
-                    }, 1000);
-                }
+            checkForMatch();
+        }
+
+        function checkForMatch() {
+            const isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
+
+            if (isMatch) {
+                disableCards();
+            } else {
+                unflipCards();
             }
+        }
+
+        function disableCards() {
+            // Remove click listeners to permanently disable cards
+            firstCard.removeEventListener('click', flipCard);
+            secondCard.removeEventListener('click', flipCard);
+            
+            // Add matched class to the front faces for visual effect
+            firstCard.querySelector('.card-front').classList.add('matched');
+            secondCard.querySelector('.card-front').classList.add('matched');
+
+            matchesFound++;
+            displayMessage("Matched!");
+            
+            if (matchesFound === totalPairs) {
+                // Win condition
+                displayMessage(`🎉 You found all ${totalPairs} pairs! Game Over! 🎉`);
+            }
+
+            resetBoard();
+        }
+
+        function unflipCards() {
+            lockBoard = true; // Lock the board to prevent further clicks
+
+            setTimeout(() => {
+                // Remove the flip class to rotate them back
+                firstCard.classList.remove('flip');
+                secondCard.classList.remove('flip');
+
+                displayMessage("No match. Try again!");
+                resetBoard();
+            }, 1000); // Wait 1 second before flipping back
+        }
+
+        function resetBoard() {
+            // Reset card variables and unlock the board
+            [hasFlippedCard, lockBoard] = [false, false];
+            [firstCard, secondCard] = [null, null];
+        }
+
+        // Initialization when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            gameContainer = document.getElementById('memory-game');
+            messageBox = document.getElementById('message-box');
+            
+            // Create and insert a Restart button before the "Back to Games" link
+            const section = document.querySelector('.center-content');
+            const backButton = document.querySelector('.pulse-btn');
+            
+            const restartButton = document.createElement('button');
+            restartButton.textContent = 'Restart Game';
+            restartButton.classList.add('pulse-btn', 'mt-6', 'mr-4');
+            restartButton.onclick = setupGame;
+            
+            // Create a wrapper for the two buttons
+            const buttonWrapper = document.createElement('div');
+            buttonWrapper.classList.add('flex', 'justify-center', 'space-x-4', 'mt-6');
+            
+            buttonWrapper.appendChild(restartButton);
+            buttonWrapper.appendChild(backButton);
+            
+            // Replace the original back button with the new wrapper
+            section.replaceChild(buttonWrapper, backButton);
+
+            // Start the game for the first time
+            setupGame();
         });
+        
+        // --- GAME LOGIC END ---
     </script>
 </body>
 </html>
