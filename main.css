@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box; 
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -5,6 +9,7 @@ body {
     background: #23272e; /* Ghostbusters dark background */
     min-height: 100vh;
     color: #fff; /* Make text readable on dark */
+    overflow-x: hidden;
 }
 
 header {
@@ -140,3 +145,4 @@ h1 {
         gap: 1rem;
     }
 }
+/* Removed the final stray closing brace '}' */
