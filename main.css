@@ -66,7 +66,9 @@ footer {
 }
 
 .pulse-btn {
-    margin-top: 2rem;
+    /* --- FIX: Reduced margin-top from 2rem to 1rem to move closer to image --- */
+    margin-top: 1rem; 
+    /* -------------------------------------------------------------------------- */
     padding: 1em 2em;
     font-size: 1.2em;
     border: none;
@@ -140,9 +142,10 @@ h1 {
         font-size: 1em;
         padding: 0.8em 1.5em;
         min-width: 140px;
+        /* No need to set margin-top here if 1rem is fine for mobile too, 
+           as it inherits the 1rem setting above. */
     }
     .game-buttons {
         gap: 1rem;
     }
 }
-/* Removed the final stray closing brace '}' */
